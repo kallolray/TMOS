@@ -8,8 +8,8 @@ var app = new Framework7({
     id: 'com.app.test',
 });
 
-var host = 'http://localhost:62029';
-//var host = 'http://tilhdev02/tmosdata';
+//var host = 'http://localhost:62029';
+var host = 'http://tilhdev02/tmosdata';
 var mcList = {};
 
 // If we need to use custom DOM library, let's save it to $$ variable:
