@@ -27,7 +27,7 @@ $$(document).on('deviceready', function() {
         dataType: 'json',
         type: 'GET',
         success: function(r_data){
-            $$('#msg').text(r_data);
+            $$('#msg').text(JSON.stringify(r_data));
             app.alert("Got data back");
             },
         error: function(error){
