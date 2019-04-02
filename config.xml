@@ -7,7 +7,7 @@
     <author email="rayk@timken.com" href="https://github.com/kallolray/TMOS">
         Test Team
     </author>
-    <content src="index.html" />
+    <content src="www/index.html" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="EnableViewportScale" value="true"/>
     <preference name="TopActivityIndicator" value="white"/>
@@ -15,6 +15,7 @@
 
     <plugin name="cordova-plugin-dialogs" source="npm" spec="~1.2.0" />
     <plugin name="cordova-plugin-file" source="npm" spec="~4.1.1" />
+    <plugin name="cordova-plugin-whitelist" source="npm" spec="~1.2.1" />
 <!--
     <plugin name="cordova-plugin-battery-status" source="npm" spec="~1.1.1" />
     <plugin name="cordova-plugin-camera" source="npm" spec="~2.1.1" />
@@ -33,7 +34,6 @@
     <plugin name="cordova-plugin-splashscreen" source="npm" spec="~3.2.1" />
     <plugin name="cordova-plugin-statusbar" source="npm" spec="~2.1.2" />
     <plugin name="cordova-plugin-vibration" source="npm" spec="~2.1.0" />
-    <plugin name="cordova-plugin-whitelist" source="npm" spec="~1.2.1" />
     -->
     <!--
     <platform name="android">

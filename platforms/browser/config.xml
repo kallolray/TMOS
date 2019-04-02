@@ -1,11 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.timken.rayk.tmosjsr" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
-    <feature name="Camera">
-        <param name="browser-package" value="Camera" />
-    </feature>
-    <feature name="Device">
-        <param name="browser-package" value="Device" />
-    </feature>
     <name>TMOS</name>
     <description>
         TMOS - Manufacturing Op System
@@ -13,7 +7,7 @@
     <author email="rayk@timken.com" href="https://github.com/kallolray/TMOS">
         Test Team
     </author>
-    <content src="index.html" />
+    <content src="www/index.html" />
     <access origin="http://tilhdev02/tmos/*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

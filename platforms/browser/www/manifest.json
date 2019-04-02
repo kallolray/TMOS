@@ -1,0 +1,11 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "TMOS",
+  "short_name": "TMOS",
+  "version": "com.timken.rayk.tmosjsr",
+  "description": "TMOS - Manufacturing Op System",
+  "author": "Test Team",
+  "icons": [],
+  "start_url": "www/index.html"
+}

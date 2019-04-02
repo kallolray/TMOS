@@ -10,7 +10,9 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+    <meta http-equiv="Content-Security-Policy" 
+    content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *;
+    connect-src *">
 
     <!-- Required meta tags-->
     <meta charset="utf-8">
@@ -29,9 +31,10 @@
 
     <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">
     <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
-    <link rel="stylesheet" href="css/framework7.bundle.min.css">
-
-    <link rel="stylesheet" href="css/styles.css">
+    
+        <link rel="stylesheet" href="css/framework7.bundle.min.css">
+    
+    <link rel="stylesheet" href="css/index.css">
 </head>
 
 <body>
@@ -76,17 +79,23 @@
                     <!-- Scrollable page content -->
                     <div class="page-content">
                         <div class="content-block">
-                            <div class="row">
-                                <div class="col-50">X1</div>
-                                <div class="col-50">Y1</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-50">X2</div>
-                                <div class="col-50">Y2</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-50">X11</div>
-                                <div class="col-50">Y11</div>
+                            <div class="data-table">
+                                <table style="height:95%;position: absolute;">
+                                    <tbody>
+                                        <tr style="height:30%">
+                                            <td>X4</td>
+                                            <td>Y4</div></td>
+                                        </tr>
+                                        <tr style="height:30%">
+                                            <td>X8</td>
+                                            <td>Y7</td>
+                                        </tr>
+                                        <tr style="height:30%">
+                                            <td>X13</td>
+                                            <td>Y13</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -105,6 +114,7 @@
 
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+    
     <script type="text/javascript" src="js/my-app.js"></script>
 </body>
 
