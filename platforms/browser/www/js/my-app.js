@@ -20,6 +20,7 @@ var mainView = app.addView('.view-main', {
 
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function() {
+    $$('#msg').text('Device Ready, making Ajax Request');
     $$.ajax({
         url: 'http://tilhdev02/tmos/plcdata.asmx/getMCList',
         data: { tagType:'P' },
@@ -28,12 +29,12 @@ $$(document).on('deviceready', function() {
         type: 'POST',
         crossDomain : true,
         success: function(r_data){
-            console.log(r_data);
+            $$('#msg').text(r_data);
             app.alert("Got data back");
             },
         error: function(error){
           console.log(error);
-          app.alert("Error. Update failed.");
+          $$('#msg').text("Error. Update failed.");
         }
   });    
 });
