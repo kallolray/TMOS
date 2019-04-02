@@ -7,7 +7,7 @@
     <author email="rayk@timken.com" href="https://github.com/kallolray/TMOS">
         Test Team
     </author>
-    <content src="www/index.html" />
+    <content src="index.html" />
     <access origin="http://tilhdev02/tmos/*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

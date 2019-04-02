@@ -27,14 +27,13 @@ $$(document).on('deviceready', function() {
         cache: false,
         dataType: 'json',
         type: 'POST',
-        crossDomain : true,
         success: function(r_data){
             $$('#msg').text(r_data);
             app.alert("Got data back");
             },
         error: function(error){
           console.log(error);
-          $$('#msg').text("Error. Update failed.");
+          $$('#msg').text("Error : " + error);
         }
   });    
 });
