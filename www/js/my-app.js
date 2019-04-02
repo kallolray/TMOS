@@ -22,7 +22,7 @@ var mainView = app.addView('.view-main', {
 $$(document).on('deviceready', function() {
     $$('#msg').text('Device Ready, making Ajax Request');
     $$.ajax({
-        url: 'http://http://tilhdev02/tmosdata/api/hello/ray/kallol',
+        url: 'http://tilhdev02/tmosdata/api/hello/ray/kallol',
         cache: false,
         dataType: 'json',
         type: 'GET',
