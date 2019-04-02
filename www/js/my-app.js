@@ -22,17 +22,16 @@ var mainView = app.addView('.view-main', {
 $$(document).on('deviceready', function() {
     $$('#msg').text('Device Ready, making Ajax Request');
     $$.ajax({
-        url: 'http://tilhdev02/tmos/plcdata.asmx/getMCList',
-        data: { tagType:'P' },
+        url: 'http://http://tilhdev02/tmosdata/api/hello/ray/kallol',
         cache: false,
         dataType: 'json',
-        type: 'POST',
+        type: 'GET',
         success: function(r_data){
             $$('#msg').text(r_data);
             app.alert("Got data back");
             },
         error: function(error){
-          console.log(error);
+            app.alert("Error");
           $$('#msg').text("Error : " + error);
         }
   });    

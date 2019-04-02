@@ -32,7 +32,7 @@ $$(document).on('deviceready', function() {
             app.alert("Got data back");
             },
         error: function(error){
-          console.log(error);
+          //console.log(error);
           $$('#msg').text("Error : " + error);
         }
   });    
