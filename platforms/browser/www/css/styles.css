@@ -13,3 +13,27 @@
 .statusbar-overlay {
     background: #000000;
 }
+
+.row-30{
+    height:30%;
+}
+
+.col-50{
+    width:50%;
+}
+
+.table-full-height{
+    height:95%;
+    position: absolute;
+    top:0;
+}
+
+.andon-OK{
+    color: white;
+    background-color: darkgreen;
+}
+
+.andon-Red{
+    color: white;
+    background-color: darkred;
+}

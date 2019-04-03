@@ -34,7 +34,7 @@
     
         <link rel="stylesheet" href="css/framework7.bundle.min.css">
     
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
@@ -75,14 +75,30 @@
             <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
             <div class="pages navbar-through toolbar-through">
                 <!-- Page, "data-page" contains page name -->
-                <div data-page="index" class="page">
+                <div data-page="andon" class="page">
                     <!-- Scrollable page content -->
-                    <div class="page-content">
+                    <div class="page-content ptr-content">
                         <div class="content-block">
+                            <div class="ptr-preloader">
+                                <div class="preloader"></div>
+                                <div class="ptr-arrow"></div>
+                            </div>
                             <div id='msg'></div>
                             <div class="data-table">
-                                <table style="height:95%;position: absolute;top:0;">
-                                    <tbody id='mcList'>
+                                <table class="table-full-height">
+                                    <tbody>
+                                        <tr class="row-30">
+                                            <td id='mc0' class="col-50"><span id='name0'></span><br><span id='dtl0'></span></td>
+                                            <td id='mc3' class="col-50"><span id='name3'></span><br><span id='dtl3'></span></td>
+                                        </tr>
+                                        <tr class="row-30">
+                                            <td id='mc1' class="col-50"><span id='name1'></span><br><span id='dtl1'></span></td>
+                                            <td id='mc4' class="col-50"><span id='name4'></span><br><span id='dtl4'></span></td>
+                                        </tr>
+                                        <tr class="row-30">
+                                            <td id='mc2' class="col-50"><span id='name2'></span><br><span id='dtl2'></span></td>
+                                            <td id='mc5' class="col-50"><span id='name5'></span><br><span id='dtl5'></span></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -103,7 +119,7 @@
 
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
-    
+    <script type="text/javascript" src="js/moment.min.js"></script>
     <script type="text/javascript" src="js/my-app.js"></script>
 </body>
 

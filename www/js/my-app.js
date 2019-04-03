@@ -20,7 +20,13 @@ var mainView = app.addView('.view-main', {
     // Because we want to use dynamic navbar, we need to enable it for this view:
     dynamicNavbar: true
 });
-
+// Pull to refresh content
+var $ptrContent = $$('.ptr-content');
+$ptrContent.on('ptr:refresh', function (e) {
+    updateAndon();
+    // When loading done, we need to reset it
+    app.ptr.done(); // or e.detail();
+});
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function() {
     //$$('#msg').text('Device Ready, making Ajax Request');
@@ -35,16 +41,10 @@ function getMCList(){
         type: 'GET',
         crossOrigin: true,
         success: function(data){
-            var tbl = "";
             for(let i=0; i < data.length; ++i){
-                if(i%2 == 0) 
-                    tbl += '<tr style="height:30%">';
-                tbl += `<td id='mc${i}' style="width:50%">${data[i]}<br><span id='dtl${i}'></span></td>`;
-                if(i%2 == 1)
-                    tbl +='</tr>';
                 mcList[data[i]] = i;
+                $$('#name'+i).text(data[i]);
             }
-            $$('#mcList').append($$(tbl));
             updateAndon();
         },
         error: function(error){
@@ -62,10 +62,15 @@ function updateAndon(){
         type: 'GET',
         crossOrigin: true,
         success: function(data){
+            for(i=0; i < 6; ++i){
+                $$('#mc'+i).removeClass('andon-Red').addClass('andon-OK');
+                $$('#dtl'+i).html('');
+            }
             for(let i=0; i < data.length; ++i){
                 var x = mcList[data[i].LINE];
-                $$('#mc'+x).css('background-color', 'red');
-                $$('#dtl'+x).text(`${data[i].MC},${data[i].TIME}`);
+                var dt = moment(data[i].TIME).format('d-MMM h:ma');
+                $$('#mc'+x).removeClass('andon-OK').addClass('andon-Red');
+                $$('#dtl'+x).append(`${data[i].MC}, ${dt}<br>`);
             }
         },
         error: function(error){
