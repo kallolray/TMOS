@@ -43,7 +43,7 @@
 
 <body>
     <!-- Status bar overlay for full screen mode (PhoneGap) -->
-    <div class="statusbar-overlay"></div>
+    <div class="statusbar"></div>
 
     <!-- Panels overlay-->
     <div class="panel-overlay"></div>
@@ -51,9 +51,10 @@
     <div class="panel panel-left panel-reveal">
         <div class="list simple-list">
             <ul>
-                <li><a href="#">Andons</a></li>
-                <li><a href="#">Hour by Hour</a></li>
-                <li><a href="#">Teams</a></li>
+                <li><a class="panel-close" href="/andon/">Andons</a></li>
+                <li><a class="panel-close" href="/hourprod/">Hour by Hour</a></li>
+                <li><a class="panel-close" href="#">Teams</a></li>
+                <li><a class="panel-close" href="#">Settings</a></li>
             </ul>
         </div>
     </div>
@@ -63,58 +64,22 @@
     <div class="views">
         <!-- Your main view, should have "view-main" class -->
         <div class="view view-main">
-            <!-- Top Navbar-->
-            <div class="navbar">
-                <div class="navbar-inner">
-                    <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
-                    <div class="title">TMOS Jamshedpur</div>
-                    <div class="right">
-                        <a href="#" class="link icon-only panel-open"><i class="f7-icons">bars</i></a>
+            <div class="page" data-name="hourprod">
+                <!-- Top Navbar-->
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
+                        <div class="title center">TMOS Jamshedpur</div>
+                        <div class="right">
+                            <a href="#" class="link icon-only panel-open"><i class="f7-icons">bars</i></a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- Bottom Toolbar-->
-            <div class="toolbar toolbar-bottom">
-                <div class="toolbar-inner">
-                    <!-- Toolbar links -->
-                    <a href="#" class="link">Link 1</a>
-                    <a href="#" class="link">Link 2</a>
+                
+                <div class="page-content">
+                    TMOS Jamshedpur
                 </div>
-            </div>
-            <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
-            <div class="pages navbar-through toolbar-through">
-                <!-- Page, "data-page" contains page name -->
-                <div data-page="andon" class="page">
-                    <!-- Scrollable page content -->
-                    <div class="page-content ptr-content" data-ptr-mousewheel="true">
-                        <div class="ptr-preloader">
-                            <div class="preloader"></div>
-                            <div class="ptr-arrow"></div>
-                        </div> 
-                        
-                            <div id='msg'></div>
-                            <div class="data-table">
-                                <table class="table-full-height">
-                                    <tbody>
-                                        <tr class="row-30">
-                                            <td id='mc0' class="col-50"><span id='name0'></span><br><span id='dtl0'></span></td>
-                                            <td id='mc3' class="col-50"><span id='name3'></span><br><span id='dtl3'></span></td>
-                                        </tr>
-                                        <tr class="row-30">
-                                            <td id='mc1' class="col-50"><span id='name1'></span><br><span id='dtl1'></span></td>
-                                            <td id='mc4' class="col-50"><span id='name4'></span><br><span id='dtl4'></span></td>
-                                        </tr>
-                                        <tr class="row-30">
-                                            <td id='mc2' class="col-50"><span id='name2'></span><br><span id='dtl2'></span></td>
-                                            <td id='mc5' class="col-50"><span id='name5'></span><br><span id='dtl5'></span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        
-                    </div>
-                </div>
-            </div>
+            </div>            
         </div>
     </div>
 
