@@ -4,19 +4,26 @@
         <div class="navbar-inner">
             <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
             <div class="title center">Hour by Hour</div>
-            <div class="right">
-                    <a href="#" class="link icon-only panel-open"><i class="f7-icons">bars</i></a>
-                    <i class="f7-icons">bars</i></a>
-            </div>
         </div>
+    </div>
+    <div class="fab fab-right-bottom">
+        <a href="#" class="mc4pc-count">
+            <i class="icon f7-icons">settings_fill</i>
+        </a>
     </div>
     
     <div class="page-content">
-        <div class="fab fab-right-bottom">
-            <a href="#" class="mc4pc-count">
-                <i class="icon f7-icons">settings_fill</i>
-            </a>
+        <div class="data-table">
+            <table style="width:auto;">
+                <thead>
+                    <tr>
+                        <th class="label-cell">Hour</th>
+                        <th class="numeric-cell">Target</th>
+                        <th class="numeric-cell">Actual</th>
+                    </tr>
+                </thead>
+                <tbody id="pccount"></tbody>
+            </table>
         </div>
-        ... scrollable page content goes here ...
     </div>
 </div>

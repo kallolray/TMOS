@@ -46,6 +46,7 @@ $$(document).on('page:init', function (e, page) {
             break;
         case 'hourprod':
             getMC4PCCount();
+            mcListActionSheet.open();
             $$('.mc4pc-count').on('click', function () {
                 mcListActionSheet.open();
             });
@@ -87,13 +88,13 @@ function updateAndon(){
         method:'GET',
         success: function(data){
             for(i=0; i < 6; ++i){
-                $$('#mc'+i).removeClass('andon-Red').addClass('andon-OK');
+                $$('#mc'+i).removeClass().addClass('andon-OK');
                 $$('#dtl'+i).html('');
             }
             for(let i=0; i < data.length; ++i){
                 var x = lineList[data[i].LINE];
                 var dt = moment(data[i].TIME).format('d-MMM h:ma');
-                $$('#mc'+x).removeClass('andon-OK').addClass('andon-Red');
+                $$('#mc'+x).removeClass().addClass('andon-Red');
                 $$('#dtl'+x).append(`${data[i].MC}, ${dt}<br>`);
             }
             app.preloader.hide();
@@ -121,11 +122,39 @@ function getMC4PCCount(){
                     {
                         text:data[i].MCNAME,
                         onClick: function () {
-                            app.dialog.alert(data[i].MCID + '\n' + data[i].MCNAME);
+                            getPCCount(data[i].TAGID);
                         },
                     });
             }
             mcListActionSheet = app.actions.create({buttons:mcListButtons});
+            app.preloader.hide();
+        },
+        error: function(error){
+            app.preloader.hide();
+            app.dialog.alert("Error");
+            $$('#msg').text("Error : " + error);
+        }
+    });
+}
+
+function getPCCount(tagID){
+    app.preloader.show('gray');
+    var mcListButtons = [];
+    app.request({
+        url: host + '/api/plc/PCCount/' + tagID,
+        dataType:'json',
+        crossDomain:true,
+        cache:false,
+        method:'GET',
+        success: function(data){
+            var tbl = $$('#pccount');
+            tbl.empty();
+            for(let i=0; i < data.length; ++i){
+                var dt = moment(data[i].TAGHR).format('h a');
+                tbl.append($$(`<tr><td class="label-cell">${dt}</td>
+                    <td class="numeric-cell"></td>
+                    <td class="numeric-cell">${data[i].N}</td></tr>`));
+            }
             app.preloader.hide();
         },
         error: function(error){

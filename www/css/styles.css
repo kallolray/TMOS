@@ -10,6 +10,10 @@
    See https://github.com/apache/cordova-plugin-statusbar
 */
 
+body{
+    overflow: auto !important;
+}
+
 .statusbar-overlay {
     background: #000000;
 }
