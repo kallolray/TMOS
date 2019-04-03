@@ -25,7 +25,7 @@ var app = new Framework7({
 //var host = 'http://localhost:62029';
 var host = 'http://tilhdev02/tmosdata';
 var lineList = {};
-var mcListActionSheet = [];
+var mcListActionSheet;
 
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
@@ -46,10 +46,17 @@ $$(document).on('page:init', function (e, page) {
             break;
         case 'hourprod':
             getMC4PCCount();
-            mcListActionSheet.open();
             $$('.mc4pc-count').on('click', function () {
                 mcListActionSheet.open();
             });
+            break;
+    }
+});
+
+$$(document).on('page:reinit', function (e, page) {
+    switch(page.name){
+        case 'hourprod':
+            mcListActionSheet.open();
             break;
     }
 });
@@ -88,13 +95,13 @@ function updateAndon(){
         method:'GET',
         success: function(data){
             for(i=0; i < 6; ++i){
-                $$('#mc'+i).removeClass().addClass('andon-OK');
+                $$('#mc'+i).removeClass('andon-Red').addClass('andon-OK');
                 $$('#dtl'+i).html('');
             }
             for(let i=0; i < data.length; ++i){
                 var x = lineList[data[i].LINE];
                 var dt = moment(data[i].TIME).format('d-MMM h:ma');
-                $$('#mc'+x).removeClass().addClass('andon-Red');
+                $$('#mc'+x).removeClass('andon-OK').addClass('andon-Red');
                 $$('#dtl'+x).append(`${data[i].MC}, ${dt}<br>`);
             }
             app.preloader.hide();
