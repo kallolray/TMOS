@@ -9,9 +9,14 @@ var app = new Framework7({
     lazyModulesPath: 'www/lib/framework7/components',
     routes: [
         {
-          name: 'hourprod',
-          path: '/hourprod/',
-          url: 'hourprod.html',
+            name: 'home',
+            path: '/home/',
+            url: 'index.html',
+        },
+        {
+            name: 'hourprod',
+            path: '/hourprod/',
+            url: 'hourprod.html',
         },
         {
             name: 'andon',
@@ -49,14 +54,6 @@ $$(document).on('page:init', function (e, page) {
             $$('.mc4pc-count').on('click', function () {
                 mcListActionSheet.open();
             });
-            break;
-    }
-});
-
-$$(document).on('page:reinit', function (e, page) {
-    switch(page.name){
-        case 'hourprod':
-            mcListActionSheet.open();
             break;
     }
 });
@@ -135,6 +132,7 @@ function getMC4PCCount(){
             }
             mcListActionSheet = app.actions.create({buttons:mcListButtons});
             app.preloader.hide();
+            mcListActionSheet.open();
         },
         error: function(error){
             app.preloader.hide();
