@@ -29,11 +29,15 @@
         http://www.idangero.us/framework7/tutorials/maintain-both-ios-and-material-themes-in-single-app.html
      -->
 
-    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">
+    <!--
+    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css"> 
     <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
-    
-        <link rel="stylesheet" href="css/framework7.bundle.min.css">
-    
+    <link rel="stylesheet" href="lib/framework7/components/preloader.css">
+    <link rel="stylesheet" href="lib/framework7/components/pull-to-refresh.css">
+    <link rel="stylesheet" href="lib/framework7/components/panel.css">
+     -->
+    <link rel="stylesheet" href="lib/framework7/css/framework7.bundle.min.css">
+    <link rel="stylesheet" href="lib/framework7/css/framework7-icons.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
@@ -53,6 +57,7 @@
             </ul>
         </div>
     </div>
+    <div class="preloader"></div>
 
     <!-- Views -->
     <div class="views">
@@ -62,14 +67,18 @@
             <div class="navbar">
                 <div class="navbar-inner">
                     <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
-                    <div class="center sliding">TMOS Jamshedpur</div>
+                    <div class="title">TMOS Jamshedpur</div>
                     <div class="right">
-                        <!--
-                          Right link contains only icon - additional "icon-only" class
-                          Additional "open-panel" class tells app to open panel when we click on this link
-                        -->
-                        <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
+                        <a href="#" class="link icon-only panel-open"><i class="f7-icons">bars</i></a>
                     </div>
+                </div>
+            </div>
+            <!-- Bottom Toolbar-->
+            <div class="toolbar toolbar-bottom">
+                <div class="toolbar-inner">
+                    <!-- Toolbar links -->
+                    <a href="#" class="link">Link 1</a>
+                    <a href="#" class="link">Link 2</a>
                 </div>
             </div>
             <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
@@ -77,12 +86,12 @@
                 <!-- Page, "data-page" contains page name -->
                 <div data-page="andon" class="page">
                     <!-- Scrollable page content -->
-                    <div class="page-content ptr-content">
-                        <div class="content-block">
-                            <div class="ptr-preloader">
-                                <div class="preloader"></div>
-                                <div class="ptr-arrow"></div>
-                            </div>
+                    <div class="page-content ptr-content" data-ptr-mousewheel="true">
+                        <div class="ptr-preloader">
+                            <div class="preloader"></div>
+                            <div class="ptr-arrow"></div>
+                        </div> 
+                        
                             <div id='msg'></div>
                             <div class="data-table">
                                 <table class="table-full-height">
@@ -102,23 +111,20 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
+                        
                     </div>
-                </div>
-            </div>
-            <!-- Bottom Toolbar-->
-            <div class="toolbar">
-                <div class="toolbar-inner">
-                    <!-- Toolbar links -->
-                    <a href="#" class="link">Link 1</a>
-                    <a href="#" class="link">Link 2</a>
                 </div>
             </div>
         </div>
     </div>
 
     <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+    <script type="text/javascript" src="lib/framework7/js/framework7.bundle.min.js"></script>
+    <!--
+    <script type="text/javascript" src="lib/framework7/components/preloader.js"></script>
+    <script type="text/javascript" src="lib/framework7/components/pull-to-refresh.js"></script>
+    <script type="text/javascript" src="lib/framework7/components/panel.js"></script>
+    -->
     <script type="text/javascript" src="js/moment.min.js"></script>
     <script type="text/javascript" src="js/my-app.js"></script>
 </body>
