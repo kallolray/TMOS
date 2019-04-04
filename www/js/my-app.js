@@ -6,7 +6,6 @@ var app = new Framework7({
       },
     name: 'TMOS',
     id: 'com.app.test',
-    lazyModulesPath: 'www/lib/framework7/components',
     routes: [
         {
             name: 'andon',
