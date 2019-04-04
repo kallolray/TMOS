@@ -9,14 +9,14 @@ var app = new Framework7({
     lazyModulesPath: 'www/lib/framework7/components',
     routes: [
         {
-            name: 'hourprod',
-            path: '/hourprod',
-            url: 'hourprod.html',
-        },
-        {
             name: 'andon',
             path: '/andon',
             url: 'andon.html',
+        },
+        {
+            name: 'hourprod',
+            path: '/hourprod',
+            url: 'hourprod.html',
         },
       ],
     toast: {
@@ -45,7 +45,7 @@ var toastUpdComplete = app.toast.create({
 var $$ = Dom7;
 
 // Add view
-app.views.create('.view-main',{url:'/andon'});
+app.views.create('.view-main');
 
 document.addEventListener("deviceready", 
     function(){
