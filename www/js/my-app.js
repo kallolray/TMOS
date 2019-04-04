@@ -10,7 +10,7 @@ var app = new Framework7({
         {
             name: 'andon',
             path: '/andon/',
-            url: 'index.html',
+            url: 'andon.html',
         },
         {
             name: 'hourprod',
@@ -56,8 +56,6 @@ var $$ = Dom7;
 document.addEventListener("deviceready", 
     function(){
         document.addEventListener("resume", refreshPage, false);
-        curPage = 'andon';
-        refreshPage();
     }, false);
     
 function showMCs(){
