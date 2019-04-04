@@ -25,7 +25,27 @@ var app = new Framework7({
     statusbar: {
         iosOverlaysWebView: false,
         overlay : false,
-    },    
+    },
+    on: {
+        pageAfterIn: function(e, page) {
+            // do something after page gets into the view
+            curPage = e.name;
+            switch(curPage){
+                case 'andon':
+                    getlineList();
+                    break;
+                case 'hourprod':
+                    getMC4PCCount();
+                    $$('.mc4pc-count').on('click', function () {
+                        mcListActionSheet.open();
+                    });
+                    break;
+            }
+        },
+        pageInit: function (e, page) {
+          // do something when page initialized
+        },
+      },
 });
 
 
@@ -65,6 +85,7 @@ function refreshPage(){
 }
 
 $$(document).on('page:init', function (e, page) {
+    return;
     curPage = page.name;
     switch(curPage){
         case 'andon':
