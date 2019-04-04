@@ -26,8 +26,8 @@ var app = new Framework7({
         overlay : false,
     },
     on: {
-        pageAfterIn: function(e, page) {
-            // do something after page gets into the view
+        init: function(e, page) {
+            document.addEventListener("resume", refreshPage, false);
         },
         pageInit: function (e, page) {
           // do something when page initialized
