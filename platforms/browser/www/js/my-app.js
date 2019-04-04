@@ -57,7 +57,8 @@ var $$ = Dom7;
 document.addEventListener("deviceready", 
     function(){
         document.addEventListener("resume", refreshPage, false);
-        //app.views.create('.view-main',{url:'/andon/'});
+        curPage = 'andon';
+        refreshPage();
     }, false);
     
 function showMCs(){
