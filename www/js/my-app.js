@@ -10,12 +10,12 @@ var app = new Framework7({
     routes: [
         {
             name: 'andon',
-            path: '/andon',
+            path: '/andon/',
             url: 'andon.html',
         },
         {
             name: 'hourprod',
-            path: '/hourprod',
+            path: '/hourprod/',
             url: 'hourprod.html',
         },
       ],
@@ -45,7 +45,7 @@ var toastUpdComplete = app.toast.create({
 var $$ = Dom7;
 
 // Add view
-app.views.create('.view-main');
+app.views.create('.view-main',{url:'/andon/'});
 
 document.addEventListener("deviceready", 
     function(){
@@ -55,7 +55,7 @@ document.addEventListener("deviceready",
 function refreshPage(){
     switch (curPage){
         case 'andon':
-            if(lineList.length == 0) getlineList();
+            if(Object.keys(lineList).length == 0) getlineList();
             else updateAndon();
             break;
         case 'hourprod':
