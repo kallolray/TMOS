@@ -1,11 +1,18 @@
 // Initialize app
+//var host = 'http://localhost:62029';
+var host = 'http://tilhdev02/tmosdata';
+var lineList = {};
+var mcListActionSheet = null;
+var curTag = {};
+var curPage;
+
 var app = new Framework7({
     theme : 'ios',
     panel: {
         swipe: 'left',
       },
     name: 'TMOS',
-    id: 'com.app.test',
+    id: 'com.timken.rayk.tmos',
     routes: [
         {
             name: 'andon',
@@ -37,14 +44,6 @@ var app = new Framework7({
       },
 });
 
-
-//var host = 'http://localhost:62029';
-var host = 'http://tilhdev02/tmosdata';
-var lineList = {};
-var mcListActionSheet = null;
-var curTag = {};
-var curPage;
-
 var toastUpdComplete = app.toast.create({
     text: 'Data Updated',
     closeTimeout: 2000,
@@ -58,9 +57,6 @@ document.addEventListener("deviceready",
         document.addEventListener("resume", refreshPage, false);
     }, false);
     
-function showMCs(){
-    mcListActionSheet.open();
-}
 function refreshPage(){
     switch (curPage){
         case 'andon':
