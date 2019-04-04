@@ -21,7 +21,11 @@ var app = new Framework7({
       ],
     toast: {
         closeTimeout: 2000,
-    }
+    },
+    statusbar: {
+        iosOverlaysWebView: false,
+        overlay : false,
+    },    
 });
 
 
@@ -51,7 +55,8 @@ document.addEventListener("deviceready",
 function refreshPage(){
     switch (curPage){
         case 'andon':
-            updateAndon();
+            if(lineList.length == 0) getlineList();
+            else updateAndon();
             break;
         case 'hourprod':
             getPCCount(curTag);
