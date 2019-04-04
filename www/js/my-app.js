@@ -11,7 +11,7 @@ var app = new Framework7({
         {
             name: 'andon',
             path: '/andon/',
-            url: 'andon.html',
+            url: 'index.html',
         },
         {
             name: 'hourprod',
@@ -29,21 +29,11 @@ var app = new Framework7({
     on: {
         pageAfterIn: function(e, page) {
             // do something after page gets into the view
-            curPage = e.name;
-            switch(curPage){
-                case 'andon':
-                    getlineList();
-                    break;
-                case 'hourprod':
-                    getMC4PCCount();
-                    $$('.mc4pc-count').on('click', function () {
-                        mcListActionSheet.open();
-                    });
-                    break;
-            }
         },
         pageInit: function (e, page) {
           // do something when page initialized
+            curPage = e.name;
+            refreshPage();
         },
       },
 });
@@ -52,7 +42,7 @@ var app = new Framework7({
 //var host = 'http://localhost:62029';
 var host = 'http://tilhdev02/tmosdata';
 var lineList = {};
-var mcListActionSheet;
+var mcListActionSheet = null;
 var curTag = {};
 var curPage;
 
@@ -67,10 +57,12 @@ var $$ = Dom7;
 document.addEventListener("deviceready", 
     function(){
         document.addEventListener("resume", refreshPage, false);
-        app.views.create('.view-main',{url:'/andon/'});
+        //app.views.create('.view-main',{url:'/andon/'});
     }, false);
     
-
+function showMCs(){
+    mcListActionSheet.open();
+}
 function refreshPage(){
     switch (curPage){
         case 'andon':
@@ -78,26 +70,11 @@ function refreshPage(){
             else updateAndon();
             break;
         case 'hourprod':
-            getPCCount(curTag);
+            if(mcListActionSheet == null) getMC4PCCount();
+            else getPCCount(curTag);
             break;
     }
 }
-
-$$(document).on('page:init', function (e, page) {
-    return;
-    curPage = page.name;
-    switch(curPage){
-        case 'andon':
-            getlineList();
-            break;
-        case 'hourprod':
-            getMC4PCCount();
-            $$('.mc4pc-count').on('click', function () {
-                mcListActionSheet.open();
-            });
-            break;
-    }
-});
 
 function getlineList(){
     app.preloader.show('gray');
@@ -131,6 +108,9 @@ function updateAndon(){
         cache:false,
         method:'GET',
         success: function(data){
+            Object.entries(lineList).forEach(
+                ([key, value]) => $$('#name'+value).text(key)
+            );
             for(i=0; i < 6; ++i){
                 $$('#mc'+i).removeClass('andon-Red').addClass('andon-OK');
                 $$('#dtl'+i).html('');

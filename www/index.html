@@ -59,7 +59,43 @@
     <!-- Views -->
     <div class="views">
         <!-- Your main view, should have "view-main" class -->
-        <div class="view view-main">
+        <div class="view view-main view-init">
+            <div data-name="andon" class="page">
+                <!-- Top Navbar-->
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <div class="left">Andon</div>
+                        <div class="right">
+                            <span class="small-font" id="lastUpdAndon"></span>
+                            <a href="#" class="link icon-only" onclick="refreshPage();">
+                                <i class="f7-icons">refresh</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Scrollable page content -->
+                <div class="page-content ">
+                    <div id='msg'></div>
+                    <div class="data-table">
+                        <table class="table-full-height">
+                            <tbody>
+                                <tr class="row-30">
+                                    <td id='mc0' class="col-50"><span id='name0'></span><br><span id='dtl0'></span></td>
+                                    <td id='mc3' class="col-50"><span id='name3'></span><br><span id='dtl3'></span></td>
+                                </tr>
+                                <tr class="row-30">
+                                    <td id='mc1' class="col-50"><span id='name1'></span><br><span id='dtl1'></span></td>
+                                    <td id='mc4' class="col-50"><span id='name4'></span><br><span id='dtl4'></span></td>
+                                </tr>
+                                <tr class="row-30">
+                                    <td id='mc2' class="col-50"><span id='name2'></span><br><span id='dtl2'></span></td>
+                                    <td id='mc5' class="col-50"><span id='name5'></span><br><span id='dtl5'></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>            
         </div>
     </div>
 
