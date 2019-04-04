@@ -11,8 +11,7 @@
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
     <meta http-equiv="Content-Security-Policy" 
-    content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *;
-    connect-src *">
+    content="default-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';  media-src *; connect-src *;">
 
     <!-- Required meta tags-->
     <meta charset="utf-8">
@@ -24,10 +23,6 @@
 
     <!-- Your app title -->
     <title>TMOS</title>
-
-    <!-- This template defaults to the iOS CSS theme. To support both iOS and material design themes, see the Framework7 Tutorial at the link below:
-        http://www.idangero.us/framework7/tutorials/maintain-both-ios-and-material-themes-in-single-app.html
-     -->
 
     <!--
     <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css"> 
@@ -51,8 +46,8 @@
     <div class="panel panel-left panel-reveal">
         <div class="list simple-list">
             <ul>
-                <li><a class="panel-close" href="/andon/">Andons</a></li>
-                <li><a class="panel-close" href="/hourprod/">Hour by Hour</a></li>
+                <li><a class="panel-close" href="/andon">Andons</a></li>
+                <li><a class="panel-close" href="/hourprod">Hour by Hour</a></li>
                 <li><a class="panel-close" href="#">Teams</a></li>
                 <li><a class="panel-close" href="#">Settings</a></li>
             </ul>
@@ -64,22 +59,6 @@
     <div class="views">
         <!-- Your main view, should have "view-main" class -->
         <div class="view view-main">
-            <div class="page" data-name="home">
-                <!-- Top Navbar-->
-                <div class="navbar">
-                    <div class="navbar-inner">
-                        <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
-                        <div class="title center">TMOS Jamshedpur</div>
-                        <div class="right">
-                            <a href="#" class="link icon-only panel-open"><i class="f7-icons">bars</i></a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="page-content">
-                    TMOS Jamshedpur
-                </div>
-            </div>            
         </div>
     </div>
 

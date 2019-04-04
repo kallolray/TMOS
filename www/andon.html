@@ -2,18 +2,19 @@
     <!-- Top Navbar-->
     <div class="navbar">
         <div class="navbar-inner">
-            <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
-            <div class="title center">Andon</div>
+            <div class="title">Andon</div>
+            <div class="right">
+                <span class="small-font" id="lastUpdAndon"></span>
+                <a href="#" class="link icon-only" onclick="refreshPage();">
+                    <i class="f7-icons">refresh</i>
+                </a>
+            </div>
         </div>
     </div>
     <!-- Scrollable page content -->
-    <div class="page-content ptr-content" data-ptr-mousewheel="true">
-        <div class="ptr-preloader">
-            <div class="preloader"></div>
-            <div class="ptr-arrow"></div>
-        </div> 
+    <div class="page-content ptr-content" id="ptrAndon" data-ptr-mousewheel="true">
         <div id='msg'></div>
-        <div class="data-table">
+        <div class="data-table ptr-watch-scrollable">
             <table class="table-full-height">
                 <tbody>
                     <tr class="row-30">

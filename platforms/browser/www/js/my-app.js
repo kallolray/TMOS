@@ -9,21 +9,19 @@ var app = new Framework7({
     lazyModulesPath: 'www/lib/framework7/components',
     routes: [
         {
-            name: 'home',
-            path: '/home/',
-            url: 'index.html',
-        },
-        {
             name: 'hourprod',
-            path: '/hourprod/',
+            path: '/hourprod',
             url: 'hourprod.html',
         },
         {
             name: 'andon',
-            path: '/andon/',
+            path: '/andon',
             url: 'andon.html',
         },
       ],
+    toast: {
+        closeTimeout: 2000,
+    }
 });
 
 
@@ -31,23 +29,41 @@ var app = new Framework7({
 var host = 'http://tilhdev02/tmosdata';
 var lineList = {};
 var mcListActionSheet;
+var curTag = {};
+var curPage;
+
+var toastUpdComplete = app.toast.create({
+    text: 'Data Updated',
+    closeTimeout: 2000,
+});
 
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
 
 // Add view
-app.views.create('.view-main');
+app.views.create('.view-main',{url:'/andon'});
+
+document.addEventListener("deviceready", 
+    function(){
+        document.addEventListener("resume", refreshPage, false);
+    }, false);
+
+function refreshPage(){
+    switch (curPage){
+        case 'andon':
+            updateAndon();
+            break;
+        case 'hourprod':
+            getPCCount(curTag);
+            break;
+    }
+}
+
 $$(document).on('page:init', function (e, page) {
-    switch(page.name){
+    curPage = page.name;
+    switch(curPage){
         case 'andon':
             getlineList();
-            // Pull to refresh content
-            var $ptrContent = $$('.ptr-content');
-            $ptrContent.on('ptr:refresh', function (e) {
-                updateAndon();
-                // When loading done, we need to reset it
-                app.ptr.done(); // or e.detail();
-            });
             break;
         case 'hourprod':
             getMC4PCCount();
@@ -74,10 +90,9 @@ function getlineList(){
             app.preloader.hide();
             updateAndon();
         },
-        error: function(error){
+        error: function(error,status){
             app.preloader.hide();
-            app.dialog.alert("Error");
-            $$('#msg').text("Error : " + error);
+            app.dialog.alert("Error - " + status);
         }
     });
 }
@@ -101,12 +116,14 @@ function updateAndon(){
                 $$('#mc'+x).removeClass('andon-OK').addClass('andon-Red');
                 $$('#dtl'+x).append(`${data[i].MC}, ${dt}<br>`);
             }
-            app.preloader.hide();
+            $$('#lastUpdAndon').text(moment().format('d-MMM h:mm:ssa'));
+            toastUpdComplete.open();
         },
-        error: function(error){
+        error: function(error,status){
+            app.dialog.alert("Error - " + status);
+        },
+        complete: function(){
             app.preloader.hide();
-            app.dialog.alert("Error");
-            $$('#msg').text("Error : " + error);
         }
     });    
 }
@@ -126,7 +143,7 @@ function getMC4PCCount(){
                     {
                         text:data[i].MCNAME,
                         onClick: function () {
-                            getPCCount(data[i].TAGID);
+                            getPCCount({ID:data[i].TAGID, Name:data[i].MCNAME});
                         },
                     });
             }
@@ -134,19 +151,22 @@ function getMC4PCCount(){
             app.preloader.hide();
             mcListActionSheet.open();
         },
-        error: function(error){
+        error: function(error,status){
+            app.dialog.alert("Error - " + status);
+        },
+        complete: function(){
             app.preloader.hide();
-            app.dialog.alert("Error");
-            $$('#msg').text("Error : " + error);
         }
     });
 }
 
-function getPCCount(tagID){
+function getPCCount(tag){
     app.preloader.show('gray');
-    var mcListButtons = [];
+    curTag.ID = tag.ID;
+    curTag.Name = tag.Name;
+    $$('#titleHourProd').text(curTag.Name);
     app.request({
-        url: host + '/api/plc/PCCount/' + tagID,
+        url: host + '/api/plc/PCCount/' + tag.ID,
         dataType:'json',
         crossDomain:true,
         cache:false,
@@ -160,12 +180,14 @@ function getPCCount(tagID){
                     <td class="numeric-cell"></td>
                     <td class="numeric-cell">${data[i].N}</td></tr>`));
             }
-            app.preloader.hide();
+            $$('#lastUpHourProd').text(moment().format('d-MMM h:mm:ssa'));
+            toastUpdComplete.open();
         },
-        error: function(error){
+        error: function(error,status){
+            app.dialog.alert("Error - " + status);
+        },
+        complete: function(){
             app.preloader.hide();
-            app.dialog.alert("Error");
-            $$('#msg').text("Error : " + error);
         }
     });
 }

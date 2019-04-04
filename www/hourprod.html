@@ -2,8 +2,13 @@
     <!-- Top Navbar-->
     <div class="navbar">
         <div class="navbar-inner">
-            <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
-            <div class="title center">Hour by Hour</div>
+            <div class="title" id='titleHourProd'>Hour by Hour</div>
+            <div class="right">
+                <span class="small-font" id="lastUpHourProd"></span>
+                <a href="#" class="link icon-only" onclick="refreshPage();">
+                    <i class="f7-icons">refresh</i>
+                </a>
+            </div>
         </div>
     </div>
     <div class="fab fab-right-bottom">

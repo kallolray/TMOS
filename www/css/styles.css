@@ -14,6 +14,9 @@ body{
     overflow: auto !important;
 }
 
+.small-font{
+    font-size: x-small;
+}
 .statusbar-overlay {
     background: #000000;
 }
