@@ -64,13 +64,12 @@ var toastUpdComplete = app.toast.create({
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
 
-// Add view
-app.views.create('.view-main',{url:'/andon/'});
-
 document.addEventListener("deviceready", 
     function(){
         document.addEventListener("resume", refreshPage, false);
+        app.views.create('.view-main',{url:'/andon/'});
     }, false);
+    
 
 function refreshPage(){
     switch (curPage){
