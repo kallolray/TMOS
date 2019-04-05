@@ -171,11 +171,23 @@ function getPCCount(tag){
         cache:false,
         method:'GET',
         success: function(data){
+            if (data.length == 0) return;
             var tbl = $$('#pccount');
             tbl.empty();
-            for(let i=0; i < data.length; ++i){
+            var rowSpan = 1;
+            var td1 = "";
+            for(let i=data.length-1; i >=0; --i){
                 var dt = moment(data[i].TAGHR).format('h a');
-                tbl.append($$(`<tr><td class="label-cell">${dt}</td>
+                if(i > 0 && data[i].SHT == data[i-1].SHT){
+                    td1 = "";
+                    ++rowSpan;
+                }
+                else{
+                    td1=`<td class="label-cell" rowspan=${rowSpan}>${data[i].SHT}</td>`;
+                    rowSpan = 1;
+                }
+                tbl.prepend($$(`<tr>${td1}
+                    <td class="label-cell">${dt}</td>
                     <td class="numeric-cell"></td>
                     <td class="numeric-cell">${data[i].N}</td></tr>`));
             }

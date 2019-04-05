@@ -12,7 +12,8 @@
     <preference name="EnableViewportScale" value="true"/>
     <preference name="TopActivityIndicator" value="white"/>
     <preference name="KeyboardDisplayRequiresUserAction" value="false"/>
-    
+    <preference name="Fullscreen" value="true" />
+    <preference name="Orientation" value="landscape" />
 <!--
     <plugin name="cordova-plugin-dialogs" source="npm" spec="~1.2.0" />
     <plugin name="cordova-plugin-file" source="npm" spec="~4.1.1" />

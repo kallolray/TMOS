@@ -19,4 +19,6 @@
     <preference name="EnableViewportScale" value="true" />
     <preference name="TopActivityIndicator" value="white" />
     <preference name="KeyboardDisplayRequiresUserAction" value="false" />
+    <preference name="Fullscreen" value="true" />
+    <preference name="Orientation" value="landscape" />
 </widget>
