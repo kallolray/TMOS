@@ -20,6 +20,17 @@ body{
 .statusbar-overlay {
     background: #000000;
 }
+.shiftName{
+    text-align: center;
+    font-size: large;
+}
+
+.shiftTable {
+    width:100%;
+    border: 1px solid gray;
+    border-collapse: collapse;
+    margin: 5px;
+}
 
 .row-50{
     height:50%;
@@ -43,4 +54,12 @@ body{
 .andon-Red{
     color: white;
     background-color: darkred;
+}
+
+.prod-OK{
+    color: darkgreen;
+}
+
+.prod-nOK{
+    color: darkred;
 }

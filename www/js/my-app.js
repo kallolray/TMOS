@@ -26,7 +26,7 @@ var app = new Framework7({
         },
       ],
     toast: {
-        closeTimeout: 2000,
+        closeTimeout: 500,
     },
     statusbar: {
         iosOverlaysWebView: false,
@@ -174,16 +174,21 @@ function getPCCount(tag){
         success: function(data){
             var shiftNames = Object.keys(data);
             if (shiftNames.length == 0) return;
-            for(let i = 0; i < 3; ++i){
+            for(let i = 0; i < shiftNames.length; ++i){
                 $$('#shiftName-' + i).text(shiftNames[i]);
                 var tr = "";
                 for(const shiftData of data[shiftNames[i]]){
-                    var dt = moment(shiftData.TAGHR).format('h a');
-                    tr += `<tr><td class="label-cell">${dt}</td>
-                    <td class="numeric-cell">${shiftData.TARGET}</td>
-                    <td class="numeric-cell">${shiftData.ACTUAL}</td></tr>`;
+                    var dt = moment(shiftData.HR).format('h a');
+                    var act = moment(shiftData.HR) >= new Date? "NA" : shiftData.A;
+                    var cls = "";
+                    if(act != "NA")
+                        cls = `class="${act >= shiftData.T?"prod-OK":"prod-nOK"}"`;
+                    
+                    tr += `<tr><td class="text-align-center">${dt}</td>
+                    <td class="text-align-right">
+                    ${shiftData.T} / <span ${cls}>${act}</span></td></tr>`;
                 }
-                $$('#shiftData-'+i).append($$(tr));
+                $$('#shiftData-'+i).html(tr);
             }
             $$('#lastUpHourProd').text(moment().format('d-MMM h:mm:ssa'));
             toastUpdComplete.open();
