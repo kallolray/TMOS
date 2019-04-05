@@ -35,6 +35,7 @@ var app = new Framework7({
     on: {
         init: function(e, page) {
             document.addEventListener("resume", refreshPage, false);
+            screen.orientation.lock('landscape');
         },
         pageInit: function (e, page) {
           // do something when page initialized
