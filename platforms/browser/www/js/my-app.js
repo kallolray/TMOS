@@ -35,6 +35,7 @@ var app = new Framework7({
     on: {
         init: function(e, page) {
             document.addEventListener("resume", refreshPage, false);
+            screen.orientation.lock('landscape');
         },
         pageInit: function (e, page) {
           // do something when page initialized
@@ -52,10 +53,10 @@ var toastUpdComplete = app.toast.create({
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
 
-document.addEventListener("deviceready", 
+/*document.addEventListener("deviceready", 
     function(){
-        document.addEventListener("resume", refreshPage, false);
-    }, false);
+        
+    }, false);*/
     
 function refreshPage(){
     switch (curPage){
@@ -171,25 +172,18 @@ function getPCCount(tag){
         cache:false,
         method:'GET',
         success: function(data){
-            if (data.length == 0) return;
-            var tbl = $$('#pccount');
-            tbl.empty();
-            var rowSpan = 1;
-            var td1 = "";
-            for(let i=data.length-1; i >=0; --i){
-                var dt = moment(data[i].TAGHR).format('h a');
-                if(i > 0 && data[i].SHT == data[i-1].SHT){
-                    td1 = "";
-                    ++rowSpan;
+            var shiftNames = Object.keys(data);
+            if (shiftNames.length == 0) return;
+            for(let i = 0; i < 3; ++i){
+                $$('#shiftName-' + i).text(shiftNames[i]);
+                var tr = "";
+                for(const shiftData of data[shiftNames[i]]){
+                    var dt = moment(shiftData.TAGHR).format('h a');
+                    tr += `<tr><td class="label-cell">${dt}</td>
+                    <td class="numeric-cell">${shiftData.TARGET}</td>
+                    <td class="numeric-cell">${shiftData.ACTUAL}</td></tr>`;
                 }
-                else{
-                    td1=`<td class="label-cell" rowspan=${rowSpan}>${data[i].SHT}</td>`;
-                    rowSpan = 1;
-                }
-                tbl.prepend($$(`<tr>${td1}
-                    <td class="label-cell">${dt}</td>
-                    <td class="numeric-cell"></td>
-                    <td class="numeric-cell">${data[i].N}</td></tr>`));
+                $$('#shiftData-'+i).append($$(tr));
             }
             $$('#lastUpHourProd').text(moment().format('d-MMM h:mm:ssa'));
             toastUpdComplete.open();

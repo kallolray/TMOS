@@ -21,12 +21,12 @@ body{
     background: #000000;
 }
 
-.row-30{
-    height:30%;
+.row-50{
+    height:50%;
 }
 
-.col-50{
-    width:50%;
+.col-33{
+    width:33%;
 }
 
 .table-full-height{

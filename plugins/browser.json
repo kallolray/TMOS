@@ -39,6 +39,9 @@
     },
     "cordova-plugin-inappbrowser": {
       "PACKAGE_NAME": "com.timken.rayk.tmosjsr"
+    },
+    "cordova-plugin-screen-orientation": {
+      "PACKAGE_NAME": "com.timken.rayk.tmosjsr"
     }
   },
   "dependent_plugins": {
