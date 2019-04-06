@@ -6,7 +6,7 @@ var mcListActionSheet = null;
 var curTag = {};
 var curPage;
 var logData = [];
-var push;
+var push = {};
 
 var app = new Framework7({
     theme : 'ios',
@@ -43,7 +43,7 @@ var app = new Framework7({
         init: function(e, page) {
             document.addEventListener("resume", refreshPage, false);
             screen.orientation.lock('landscape');
-            setupPush();
+            //setupPush();
         },
         pageInit: function (e, page) {
           // do something when page initialized
@@ -61,10 +61,10 @@ var toastUpdComplete = app.toast.create({
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
 
-/*document.addEventListener("deviceready", 
+document.addEventListener("deviceready", 
     function(){
-        
-    }, false);*/
+        setupPush();
+    }, false);
     
 function refreshPage(){
     switch (curPage){
@@ -223,7 +223,6 @@ function add2Log(text){
     logData.push(text);
 }
 
-
 // Application Constructor
 function setupPush() {
     add2Log("calling push init");
@@ -244,7 +243,6 @@ function setupPush() {
         */
     });
     add2Log("After Init");
-
     push.on('registration', function(data) {
         add2Log('registration event: ' + data.registrationId);
         var oldRegId = localStorage.getItem('registrationId');
@@ -255,11 +253,11 @@ function setupPush() {
             // Post registrationId to your app server as the value has changed
         }
     });
-
+    
     push.on('error', function(e) {
         add2Log("push error = " + e.message);
     });
-
+    
     push.on('notification', function(data) {
         add2Log("notification event");
         navigator.notification.alert(

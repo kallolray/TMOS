@@ -6,7 +6,7 @@ var mcListActionSheet = null;
 var curTag = {};
 var curPage;
 var logData = [];
-var push;
+var push = {};
 
 var app = new Framework7({
     theme : 'ios',
@@ -223,6 +223,30 @@ function add2Log(text){
     logData.push(text);
 }
 
+push.on('registration', function(data) {
+    add2Log('registration event: ' + data.registrationId);
+    var oldRegId = localStorage.getItem('registrationId');
+    if (oldRegId !== data.registrationId) {
+        // Save new registration ID
+        add2Log("Got new registration ID");
+        localStorage.setItem('registrationId', data.registrationId);
+        // Post registrationId to your app server as the value has changed
+    }
+});
+
+push.on('error', function(e) {
+    add2Log("push error = " + e.message);
+});
+
+push.on('notification', function(data) {
+    add2Log("notification event");
+    navigator.notification.alert(
+        data.message,         // message
+        null,                 // callback
+        data.title,           // title
+        'Ok'                  // buttonName
+    );
+});
 
 // Application Constructor
 function setupPush() {
@@ -244,29 +268,4 @@ function setupPush() {
         */
     });
     add2Log("After Init");
-
-    push.on('registration', function(data) {
-        add2Log('registration event: ' + data.registrationId);
-        var oldRegId = localStorage.getItem('registrationId');
-        if (oldRegId !== data.registrationId) {
-            // Save new registration ID
-            add2Log("Got new registration ID");
-            localStorage.setItem('registrationId', data.registrationId);
-            // Post registrationId to your app server as the value has changed
-        }
-    });
-
-    push.on('error', function(e) {
-        add2Log("push error = " + e.message);
-    });
-
-    push.on('notification', function(data) {
-        add2Log("notification event");
-        navigator.notification.alert(
-            data.message,         // message
-            null,                 // callback
-            data.title,           // title
-            'Ok'                  // buttonName
-        );
-    });
 }
