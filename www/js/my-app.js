@@ -188,8 +188,9 @@ function getPCCount(tag){
         success: function(data){
             var shiftNames = Object.keys(data);
             if (shiftNames.length == 0) return;
+            var tr = "";
             for(let i = 0; i < shiftNames.length; ++i){
-                var tr = 
+                tr += 
                 `<td width=22%>
                     <div class="shiftName">${shiftNames[i]}</div>
                     <table class="shiftTable" cellpadding=2 border=1>
