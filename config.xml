@@ -24,7 +24,7 @@
     <plugin name="cordova-plugin-media" source="npm" spec="~2.2.0" />
     <plugin name="cordova-plugin-media" source="npm" spec="~2.2.0" />
     <plugin name="cordova-plugin-screen-orientation" source="npm" />
-    <plugin name="phonegap-plugin-push" source="npm" spec="~2.2.3">
+    <plugin name="phonegap-plugin-push" source="npm" spec="~1.8.0">
         <variable name="SENDER_ID" value="NONE" />
     </plugin>
     
