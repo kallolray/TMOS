@@ -6,6 +6,7 @@ var mcListActionSheet = null;
 var curTag = {};
 var curPage;
 var logData = [];
+var push;
 
 var app = new Framework7({
     theme : 'ios',
@@ -218,7 +219,7 @@ function getPCCount(tag){
 }
 
 function add2Log(text){
-    $$("logData").append($$(text + "<br/>"));
+    //$$("logData").append($$(text + "<br/>"));
     logData.push(text);
 }
 
@@ -226,10 +227,7 @@ function add2Log(text){
 // Application Constructor
 function setupPush() {
     add2Log("calling push init");
-    var push = PushNotification.init({
-        "browser": {
-            pushServiceURL: 'http://localhost:62029/api/hello/push'
-        },
+    push = PushNotification.init({
         "ios": {
             "sound": true,
             "vibration": true,
@@ -239,7 +237,11 @@ function setupPush() {
         "android": {
             "senderID": "XXXXXXXX"
         },
-        "windows": {} */
+        "windows": {} 
+        "browser": {
+            pushServiceURL: 'http://localhost:62029/api/hello/push'
+        },
+        */
     });
     add2Log("After Init");
 
@@ -248,6 +250,7 @@ function setupPush() {
         var oldRegId = localStorage.getItem('registrationId');
         if (oldRegId !== data.registrationId) {
             // Save new registration ID
+            add2Log("Got new registration ID");
             localStorage.setItem('registrationId', data.registrationId);
             // Post registrationId to your app server as the value has changed
         }
