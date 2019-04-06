@@ -42,7 +42,7 @@ var app = new Framework7({
         init: function(e, page) {
             document.addEventListener("resume", refreshPage, false);
             screen.orientation.lock('landscape');
-            if(isMobile) pushApp.setupPush();
+            //if(isMobile) pushApp.setupPush();
         },
         pageInit: function (e, page) {
           // do something when page initialized
@@ -60,10 +60,8 @@ var toastUpdComplete = app.toast.create({
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
 
-// document.addEventListener("deviceready", 
-//     function(){
-//         setupPush();
-//     }, false);
+document.addEventListener("deviceready", 
+    () => {if(isMobile) pushApp.setupPush();}, false);
     
 function refreshPage(){
     switch (curPage){
