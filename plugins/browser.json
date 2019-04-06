@@ -42,6 +42,9 @@
     },
     "cordova-plugin-screen-orientation": {
       "PACKAGE_NAME": "com.timken.rayk.tmosjsr"
+    },
+    "phonegap-plugin-push": {
+      "PACKAGE_NAME": "com.timken.rayk.tmosjsr"
     }
   },
   "dependent_plugins": {

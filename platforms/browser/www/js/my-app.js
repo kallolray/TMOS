@@ -5,6 +5,7 @@ var lineList = {};
 var mcListActionSheet = null;
 var curTag = {};
 var curPage;
+var logData = [];
 
 var app = new Framework7({
     theme : 'ios',
@@ -24,6 +25,11 @@ var app = new Framework7({
             path: '/hourprod/',
             url: 'hourprod.html',
         },
+        {
+            name: 'log',
+            path: '/log/',
+            url: 'log.html',
+        },
       ],
     toast: {
         closeTimeout: 500,
@@ -36,6 +42,7 @@ var app = new Framework7({
         init: function(e, page) {
             document.addEventListener("resume", refreshPage, false);
             screen.orientation.lock('landscape');
+            setupPush();
         },
         pageInit: function (e, page) {
           // do something when page initialized
@@ -68,7 +75,15 @@ function refreshPage(){
             if(mcListActionSheet == null) getMC4PCCount();
             else getPCCount(curTag);
             break;
+        case 'log':
+            showLog();
+            break;
     }
+}
+
+function showLog(){
+    $$("logData").html(logData.join("<br/>"));
+    $$("#lastUpdLog").text(moment().format('d-MMM h:mm:ssa'));
 }
 
 function getlineList(){
@@ -199,5 +214,56 @@ function getPCCount(tag){
         complete: function(){
             app.preloader.hide();
         }
+    });
+}
+
+function add2Log(text){
+    $$("logData").append($$(text + "<br/>"));
+    logData.push(text);
+}
+
+
+// Application Constructor
+function setupPush() {
+    add2Log("calling push init");
+    var push = PushNotification.init({
+        "browser": {
+            pushServiceURL: 'http://localhost:62029/api/hello/push'
+        },
+        "ios": {
+            "sound": true,
+            "vibration": true,
+            "badge": true
+        },
+        /*
+        "android": {
+            "senderID": "XXXXXXXX"
+        },
+        "windows": {} */
+    });
+    add2Log("After Init");
+
+    push.on('registration', function(data) {
+        add2Log('registration event: ' + data.registrationId);
+        var oldRegId = localStorage.getItem('registrationId');
+        if (oldRegId !== data.registrationId) {
+            // Save new registration ID
+            localStorage.setItem('registrationId', data.registrationId);
+            // Post registrationId to your app server as the value has changed
+        }
+    });
+
+    push.on('error', function(e) {
+        add2Log("push error = " + e.message);
+    });
+
+    push.on('notification', function(data) {
+        add2Log("notification event");
+        navigator.notification.alert(
+            data.message,         // message
+            null,                 // callback
+            data.title,           // title
+            'Ok'                  // buttonName
+        );
     });
 }
