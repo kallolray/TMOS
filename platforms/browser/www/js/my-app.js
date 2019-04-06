@@ -42,7 +42,7 @@ var app = new Framework7({
         init: function(e, page) {
             document.addEventListener("resume", refreshPage, false);
             screen.orientation.lock('landscape');
-            if(isMobile) pushApp.setupPush();
+            //if(isMobile) pushApp.setupPush();
         },
         pageInit: function (e, page) {
           // do something when page initialized
@@ -60,10 +60,8 @@ var toastUpdComplete = app.toast.create({
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
 
-// document.addEventListener("deviceready", 
-//     function(){
-//         setupPush();
-//     }, false);
+document.addEventListener("deviceready", 
+    () => {if(isMobile) pushApp.setupPush();}, false);
     
 function refreshPage(){
     switch (curPage){
@@ -128,7 +126,7 @@ function updateAndon(){
             }
             for(let i=0; i < data.length; ++i){
                 var x = lineList[data[i].LINE];
-                var dt = moment(data[i].TIME).format('d-MMM h:ma');
+                var dt = moment(data[i].TIME).format('d-MMM h:mma');
                 $$('#mc'+x).removeClass('andon-OK').addClass('andon-Red');
                 $$('#dtl'+x).append(`${data[i].MC}, ${dt}<br>`);
             }
@@ -190,9 +188,18 @@ function getPCCount(tag){
         success: function(data){
             var shiftNames = Object.keys(data);
             if (shiftNames.length == 0) return;
+            var tr = "";
             for(let i = 0; i < shiftNames.length; ++i){
-                $$('#shiftName-' + i).text(shiftNames[i]);
-                var tr = "";
+                tr += 
+                `<td width=22%>
+                    <div class="shiftName">${shiftNames[i]}</div>
+                    <table class="shiftTable" cellpadding=2 border=1>
+                        <thead><tr>
+                                <th class="text-align-center">Hour</th>
+                                <th class="text-align-right">T</th>
+                                <th class="text-align-right">A</th>
+                        </tr></thead>
+                        <tbody>`;
                 for(const shiftData of data[shiftNames[i]]){
                     var dt = moment(shiftData.HR).format('h a');
                     var act = moment(shiftData.HR) >= new Date? "NA" : shiftData.A;
@@ -201,11 +208,12 @@ function getPCCount(tag){
                         cls = `class="${act >= shiftData.T?"prod-OK":"prod-nOK"}"`;
                     
                     tr += `<tr><td class="text-align-center">${dt}</td>
-                    <td class="text-align-right">
-                    ${shiftData.T} / <span ${cls}>${act}</span></td></tr>`;
+                    <td class="text-align-right">${shiftData.T}</td>
+                    <td class="text-align-right" ${cls}>${act}</td></tr>`;
                 }
-                $$('#shiftData-'+i).html(tr);
+                tr += `</tbody></table></td>`
             }
+            $$('#shiftData').html(tr);
             $$('#lastUpHourProd').text(moment().format('d-MMM h:mm:ssa'));
             toastUpdComplete.open();
         },

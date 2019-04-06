@@ -205,11 +205,11 @@ function getPCCount(tag){
                     var act = moment(shiftData.HR) >= new Date? "NA" : shiftData.A;
                     var cls = "";
                     if(act != "NA")
-                        cls = `class="${act >= shiftData.T?"prod-OK":"prod-nOK"}"`;
+                        cls = act >= shiftData.T?"prod-OK":"prod-nOK";
                     
                     tr += `<tr><td class="text-align-center">${dt}</td>
                     <td class="text-align-right">${shiftData.T}</td>
-                    <td class="text-align-right" ${cls}>${act}</td></tr>`;
+                    <td class="text-align-right ${cls}">${act}</td></tr>`;
                 }
                 tr += `</tbody></table></td>`
             }
