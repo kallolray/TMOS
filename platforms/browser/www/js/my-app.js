@@ -5,8 +5,7 @@ var lineList = {};
 var mcListActionSheet = null;
 var curTag = {};
 var curPage;
-var logData = [];
-var push = {};
+var isMobile = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
 
 var app = new Framework7({
     theme : 'ios',
@@ -43,7 +42,7 @@ var app = new Framework7({
         init: function(e, page) {
             document.addEventListener("resume", refreshPage, false);
             screen.orientation.lock('landscape');
-            setupPush();
+            if(isMobile) pushApp.setupPush();
         },
         pageInit: function (e, page) {
           // do something when page initialized
@@ -61,10 +60,10 @@ var toastUpdComplete = app.toast.create({
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
 
-/*document.addEventListener("deviceready", 
-    function(){
-        
-    }, false);*/
+// document.addEventListener("deviceready", 
+//     function(){
+//         setupPush();
+//     }, false);
     
 function refreshPage(){
     switch (curPage){
@@ -83,7 +82,8 @@ function refreshPage(){
 }
 
 function showLog(){
-    $$("logData").html(logData.join("<br/>"));
+    $$("#logData").html(pushApp.statusData);
+    $$("#regID").val(pushApp.registrationId);
     $$("#lastUpdLog").text(moment().format('d-MMM h:mm:ssa'));
 }
 
@@ -218,54 +218,3 @@ function getPCCount(tag){
     });
 }
 
-function add2Log(text){
-    //$$("logData").append($$(text + "<br/>"));
-    logData.push(text);
-}
-
-push.on('registration', function(data) {
-    add2Log('registration event: ' + data.registrationId);
-    var oldRegId = localStorage.getItem('registrationId');
-    if (oldRegId !== data.registrationId) {
-        // Save new registration ID
-        add2Log("Got new registration ID");
-        localStorage.setItem('registrationId', data.registrationId);
-        // Post registrationId to your app server as the value has changed
-    }
-});
-
-push.on('error', function(e) {
-    add2Log("push error = " + e.message);
-});
-
-push.on('notification', function(data) {
-    add2Log("notification event");
-    navigator.notification.alert(
-        data.message,         // message
-        null,                 // callback
-        data.title,           // title
-        'Ok'                  // buttonName
-    );
-});
-
-// Application Constructor
-function setupPush() {
-    add2Log("calling push init");
-    push = PushNotification.init({
-        "ios": {
-            "sound": true,
-            "vibration": true,
-            "badge": true
-        },
-        /*
-        "android": {
-            "senderID": "XXXXXXXX"
-        },
-        "windows": {} 
-        "browser": {
-            pushServiceURL: 'http://localhost:62029/api/hello/push'
-        },
-        */
-    });
-    add2Log("After Init");
-}
