@@ -192,7 +192,7 @@ function getPCCount(tag){
                 var tr = 
                 `<td width=22%>
                     <div class="shiftName">${shiftNames[i]}</div>
-                    <table class="shiftTable" cellpadding=2>
+                    <table class="shiftTable" cellpadding=2 border=1>
                         <thead><tr>
                                 <th class="text-align-center">Hour</th>
                                 <th class="text-align-right">T</th>
@@ -208,9 +208,9 @@ function getPCCount(tag){
                     
                     tr += `<tr><td class="text-align-center">${dt}</td>
                     <td class="text-align-right">${shiftData.T}</td>
-                    <td class="text-align-right" ${cls}>${act}</td></tr>
-                    </tbody></table></td>`;
+                    <td class="text-align-right" ${cls}>${act}</td></tr>`;
                 }
+                tr += `</tbody></table></td>`
             }
             $$('#shiftData').html(tr);
             $$('#lastUpHourProd').text(moment().format('d-MMM h:mm:ssa'));
