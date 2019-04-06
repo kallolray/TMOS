@@ -126,7 +126,7 @@ function updateAndon(){
             }
             for(let i=0; i < data.length; ++i){
                 var x = lineList[data[i].LINE];
-                var dt = moment(data[i].TIME).format('d-MMM h:ma');
+                var dt = moment(data[i].TIME).format('d-MMM h:mma');
                 $$('#mc'+x).removeClass('andon-OK').addClass('andon-Red');
                 $$('#dtl'+x).append(`${data[i].MC}, ${dt}<br>`);
             }
@@ -189,8 +189,16 @@ function getPCCount(tag){
             var shiftNames = Object.keys(data);
             if (shiftNames.length == 0) return;
             for(let i = 0; i < shiftNames.length; ++i){
-                $$('#shiftName-' + i).text(shiftNames[i]);
-                var tr = "";
+                var tr = 
+                `<td width=22%>
+                    <div class="shiftName">${shiftNames[i]}</div>
+                    <table class="shiftTable" cellpadding=2>
+                        <thead><tr>
+                                <th class="text-align-center">Hour</th>
+                                <th class="text-align-right">T</th>
+                                <th class="text-align-right">A</th>
+                        </tr></thead>
+                        <tbody>`;
                 for(const shiftData of data[shiftNames[i]]){
                     var dt = moment(shiftData.HR).format('h a');
                     var act = moment(shiftData.HR) >= new Date? "NA" : shiftData.A;
@@ -199,11 +207,12 @@ function getPCCount(tag){
                         cls = `class="${act >= shiftData.T?"prod-OK":"prod-nOK"}"`;
                     
                     tr += `<tr><td class="text-align-center">${dt}</td>
-                    <td class="text-align-right">
-                    ${shiftData.T} / <span ${cls}>${act}</span></td></tr>`;
+                    <td class="text-align-right">${shiftData.T}</td>
+                    <td class="text-align-right" ${cls}>${act}</td></tr>
+                    </tbody></table></td>`;
                 }
-                $$('#shiftData-'+i).html(tr);
             }
+            $$('#shiftData').html(tr);
             $$('#lastUpHourProd').text(moment().format('d-MMM h:mm:ssa'));
             toastUpdComplete.open();
         },
