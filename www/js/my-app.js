@@ -109,7 +109,7 @@ function refreshPage(){
 }
 
 function changeOrientation(orient){
-    if(screen.orientation != orient){
+    if(screen.orientation.type != orient){
         screen.orientation.unlock();
         screen.orientation.lock(orient);
     }
@@ -278,11 +278,10 @@ function saveUserData(){
     userData = app.form.convertToData('#login-form');
     userData.lastUpdated = moment().format("D-MMM-YY h:mm:ss a");
     app.dialog.alert(Object.keys(userData));
-    //userData.platform = device.platform;
-    //userData.model = device.model;
+    userData.platform = device.platform;
+    userData.model = device.model;
+    app.dialog.alert("got device data");
     Locstor.set("userData", userData);
-    app.dialog.alert("Saved to Local storage");
     $$("#userName").text("Hi " + userData.userName);
-    app.dialog.alert("user name set. moving to andon");
     view.router.navigate("/andon/");
 }
