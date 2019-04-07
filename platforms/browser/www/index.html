@@ -45,12 +45,14 @@
     <div class="panel-overlay"></div>
     <!-- Left panel with reveal effect-->
     <div class="panel panel-left panel-reveal">
-        <div class="list simple-list">
+        <div class="block-title" id="userName"></div>
+        <div class="list links-list">
             <ul>
                 <li><a class="panel-close" href="/andon/">Andons</a></li>
                 <li><a class="panel-close" href="/hourprod/">Hour by Hour</a></li>
                 <li><a class="panel-close" href="#">Teams</a></li>
                 <li><a class="panel-close" href="#">Settings</a></li>
+                <li><a class="panel-close" href="/login/">User Data</a></li>
                 <li><a class="panel-close" href="/log/">Log (Dev)</a></li>
             </ul>
         </div>
@@ -60,7 +62,8 @@
     <!-- Views -->
     <div class="views">
         <!-- Your main view, should have "view-main" class -->
-        <div class="view view-main view-init" data-url="/andon/">
+        <!-- <div class="view view-main view-init" data-url="/andon/"> -->
+        <div class="view view-main">
         </div>
     </div>
 
@@ -71,7 +74,8 @@
     <script type="text/javascript" src="lib/framework7/components/pull-to-refresh.js"></script>
     <script type="text/javascript" src="lib/framework7/components/panel.js"></script>
     -->
-    <script type="text/javascript" src="js/moment.min.js"></script>
+    <script type="text/javascript" src="lib/moment.min.js"></script>
+    <script type="text/javascript" src="lib/locstor.min.js"></script>
     <script type="text/javascript" src="js/pushNotification.js"></script>
     <script type="text/javascript" src="js/my-app.js"></script>
 </body>

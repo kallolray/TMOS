@@ -1,11 +1,16 @@
 // Initialize app
+// If we need to use custom DOM library, let's save it to $$ variable:
+var $$ = Dom7;
+
+var isMobile = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
 var host = 'http://localhost:62029';
 //var host = 'http://tilhdev02/tmosdata';
+if(isMobile) host = 'http://tilhdev02/tmosdata';
 var lineList = {};
 var mcListActionSheet = null;
 var curTag = {};
 var curPage;
-var isMobile = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
+var userData = null;
 
 var app = new Framework7({
     theme : 'ios',
@@ -30,6 +35,11 @@ var app = new Framework7({
             path: '/log/',
             url: 'log.html',
         },
+        {
+            name: 'login',
+            path: '/login/',
+            url: 'login.html',
+        },
       ],
     toast: {
         closeTimeout: 500,
@@ -47,18 +57,23 @@ var app = new Framework7({
         pageInit: function (e, page) {
           // do something when page initialized
             curPage = e.name;
+            if(curPage == 'login') app.panel.disableSwipe('left');
+            else app.panel.enableSwipe('left');
             refreshPage();
         },
       },
 });
+if(Locstor.contains("userData"))
+{
+    userData = Locstor.get("userData");
+    $$("#userName").text("Hi " + userData.userName);
+}
+var view = app.views.create('.view-main',{url: (userData != null? "/andon/":"/login/")});
 
 var toastUpdComplete = app.toast.create({
     text: 'Data Updated',
     closeTimeout: 2000,
 });
-
-// If we need to use custom DOM library, let's save it to $$ variable:
-var $$ = Dom7;
 
 document.addEventListener("deviceready", 
     () => {if(isMobile) pushApp.setupPush();}, false);
@@ -76,13 +91,21 @@ function refreshPage(){
         case 'log':
             showLog();
             break;
+        case 'login':
+            if(userData != null){
+                app.form.fillFromData('#login-form', userData);
+                $$('#miscData').text(`Last Updated On: ${userData.lastUpdated}, Phone: ${userData.platform} on ${userData.model}`);
+            }else{
+                $$("#loginCancel").hide();
+            }
+            break;
     }
 }
 
 function showLog(){
     $$("#logData").html(pushApp.statusData);
     $$("#regID").val(pushApp.registrationId);
-    $$("#lastUpdLog").text(moment().format('d-MMM h:mm:ssa'));
+    $$("#lastUpdLog").text(moment().format('D-MMM h:mm:ssa'));
 }
 
 function getlineList(){
@@ -126,12 +149,12 @@ function updateAndon(){
             }
             for(let i=0; i < data.length; ++i){
                 var x = lineList[data[i].LINE];
-                var dt = moment(data[i].TIME).format('d-MMM h:mma');
+                var dt = moment(data[i].TIME).format('D-MMM h:mma');
                 $$('#mc'+x).removeClass('andon-OK').addClass('andon-Red');
                 $$('#dtl'+x).append(`${data[i].MC}, ${data[i].ADESC}, ${dt}<br>`);
             }
-            $$('#lastUpdAndon').text(moment().format('d-MMM h:mm:ssa'));
-            toastUpdComplete.open();
+            $$('#lastUpdAndon').text(moment().format('D-MMM h:mm:ssa'));
+            //toastUpdComplete.open();
         },
         error: function(error,status){
             app.dialog.alert("Error - " + status);
@@ -153,6 +176,7 @@ function getMC4PCCount(){
         method:'GET',
         success: function(data){
             for(let i=0; i < data.length; ++i){
+                for(let j=0; j < 2; ++j){
                 mcListButtons.push(
                     {
                         text:data[i].MCNAME,
@@ -160,6 +184,7 @@ function getMC4PCCount(){
                             getPCCount({ID:data[i].TAGID, Name:data[i].MCNAME});
                         },
                     });
+                }
             }
             mcListActionSheet = app.actions.create({buttons:mcListButtons});
             app.preloader.hide();
@@ -222,11 +247,11 @@ function getPCCount(tag){
             $$('#shiftData').html(tr);
 
             $$('#andonForLine').html(data["ANDON"] || "No Andon");
-            if(data["ANDON"] != "") $$('#andonForLine').removeClass('andon-OK').addClass('andon-Red');
-            else $$('#andonForLine').removeClass('andon-Red').addClass('andon-OK');
+            if(data["ANDON"] != "") $$('#andonForLine').removeClass('green').addClass('red');
+            else $$('#andonForLine').removeClass('red').addClass('green');
 
-            $$('#lastUpHourProd').text(moment().format('d-MMM h:mm:ssa'));
-            toastUpdComplete.open();
+            $$('#lastUpHourProd').text(moment().format('D-MMM h:mm:ssa'));
+            //toastUpdComplete.open();
         },
         error: function(error,status){
             app.dialog.alert("Error - " + status);
@@ -236,4 +261,12 @@ function getPCCount(tag){
         }
     });
 }
-
+function saveUserData(){
+    userData = app.form.convertToData('#login-form');
+    userData.lastUpdated = moment().format("D-MMM-YY h:mm:ss a");
+    userData.platform = device.platform;
+    userData.model = device.model;
+    Locstor.set("userData", userData);
+    $$("#userName").text("Hi " + userData.userName);
+    view.router.navigate("/andon/");
+}

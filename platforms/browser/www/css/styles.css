@@ -68,3 +68,6 @@ body{
     color: white;
     background-color: darkred;
 }
+
+.red{ color: darkred; }
+.green{ color: darkgreen; }
