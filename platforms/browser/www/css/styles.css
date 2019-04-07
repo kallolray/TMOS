@@ -32,11 +32,14 @@ body{
     margin: 5px;
 }
 
-.row-50{
-    height:50%;
+.text-bold, #name0, #name1, #name2, #name3, #name4, #name5{
+    font-weight: bold;
+}
+.text-small, #dtl0, #dtl1, #dtl2, #dtl3, #dtl4, #dtl5 {
+    font-size: small;
 }
 
-.col-33{
+.col-33, #mc0, #mc1, #mc2, #mc3, #mc4, #mc5 {
     width:33%;
 }
 
@@ -57,9 +60,11 @@ body{
 }
 
 .prod-OK{
-    color: darkgreen;
+    color: white;
+    background-color: darkgreen;
 }
 
 .prod-nOK{
-    color: darkred;
+    color: white;
+    background-color: darkred;
 }

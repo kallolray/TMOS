@@ -2,7 +2,12 @@
     <!-- Top Navbar-->
     <div class="navbar">
         <div class="navbar-inner">
-            <div class="left" id='titleHourProd'>Hour by Hour</div>
+            <div class="left">
+                <span  id='titleHourProd'>Hour by Hour</span>
+                <a href="#" class="link icon-only" onclick="mcListActionSheet.open();">
+                    <i class="icon f7-icons">arrow_down</i>
+                </a>
+            </div>
             <div class="right">
                 <span class="small-font" id="lastUpHourProd"></span>
                 <a href="#" class="link icon-only" onclick="refreshPage();">
@@ -11,65 +16,11 @@
             </div>
         </div>
     </div>
-    <div class="fab fab-right-bottom">
-        <a href="#" class="link icon-only" onclick="mcListActionSheet.open();">
-            <i class="icon f7-icons">settings_fill</i>
-        </a>
-    </div>
-    
     <div class="page-content">
-        <table width=95%>
+        <table width=99%>
             <tr style="vertical-align: top;" id="shiftData">
-<!--                 <td width=22%>
-                    <div class="shiftName" id="shiftName-3"></div>
-                    <table class="shiftTable" cellpadding=5>
-                        <thead>
-                            <tr>
-                                <th class="text-align-center">Hour</th>
-                                <th class="text-align-right">T / A</th>
-                            </tr>
-                        </thead>
-                        <tbody id="shiftData-3"></tbody>
-                    </table>
-                </td>
-                <td width=22%>
-                    <div class="shiftName" id="shiftName-2"></div>
-                    <table class="shiftTable" cellpadding=5 border=1>
-                        <thead>
-                            <tr>
-                                <th class="text-align-center">Hour</th>
-                                <th class="text-align-right">T / A</th>
-                            </tr>
-                        </thead>
-                        <tbody id="shiftData-2"></tbody>
-                    </table>
-                </td>
-                <td width=22%>
-                    <div class="shiftName" id="shiftName-1"></div>
-                    <table class="shiftTable" cellpadding=5>
-                        <thead>
-                            <tr>
-                                <th class="text-align-center">Hour</th>
-                                <th class="text-align-right">T / A</th>
-                            </tr>
-                        </thead>
-                        <tbody id="shiftData-1"></tbody>
-                    </table>
-                </td>
-                <td width=22%>
-                    <div class="shiftName" id="shiftName-0"></div>
-                    <table class="shiftTable" cellpadding=5>
-                        <thead>
-                            <tr>
-                                <th class="text-align-center">Hour</th>
-                                <th class="text-align-right">T / A</th>
-                            </tr>
-                        </thead>
-                        <tbody id="shiftData-0"></tbody>
-                    </table>
-                </td>
- -->            
             </tr>
         </table>
+        <span id='andonForLine' style="margin-left: 8px;"></span>
     </div>
 </div>

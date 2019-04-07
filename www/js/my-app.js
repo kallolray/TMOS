@@ -1,6 +1,6 @@
 // Initialize app
-//var host = 'http://localhost:62029';
-var host = 'http://tilhdev02/tmosdata';
+var host = 'http://localhost:62029';
+//var host = 'http://tilhdev02/tmosdata';
 var lineList = {};
 var mcListActionSheet = null;
 var curTag = {};
@@ -128,7 +128,7 @@ function updateAndon(){
                 var x = lineList[data[i].LINE];
                 var dt = moment(data[i].TIME).format('d-MMM h:mma');
                 $$('#mc'+x).removeClass('andon-OK').addClass('andon-Red');
-                $$('#dtl'+x).append(`${data[i].MC}, ${dt}<br>`);
+                $$('#dtl'+x).append(`${data[i].MC}, ${data[i].ADESC}, ${dt}<br>`);
             }
             $$('#lastUpdAndon').text(moment().format('d-MMM h:mm:ssa'));
             toastUpdComplete.open();
@@ -189,31 +189,42 @@ function getPCCount(tag){
             var shiftNames = Object.keys(data);
             if (shiftNames.length == 0) return;
             var tr = "";
-            for(let i = 0; i < shiftNames.length; ++i){
-                tr += 
-                `<td width=22%>
+            for(let i = 1; i < shiftNames.length; ++i){
+                tr += `<td width=22%>
                     <div class="shiftName">${shiftNames[i]}</div>
-                    <table class="shiftTable" cellpadding=2 border=1>
+                    <table class="shiftTable" cellpadding=3 border=1>
                         <thead><tr>
                                 <th class="text-align-center">Hour</th>
-                                <th class="text-align-right">T</th>
-                                <th class="text-align-right">A</th>
+                                <th class="text-align-right">Tgt</th>
+                                <th class="text-align-right">Act</th>
                         </tr></thead>
                         <tbody>`;
+                var sTarget = 0, sActual = 0;
                 for(const shiftData of data[shiftNames[i]]){
                     var dt = moment(shiftData.HR).format('h a');
-                    var act = moment(shiftData.HR) >= new Date? "NA" : shiftData.A;
-                    var cls = "";
-                    if(act != "NA")
+                    var act = "--", cls="";
+                    if(moment(shiftData.HR) < new Date){
+                        act = shiftData.A;
                         cls = act >= shiftData.T?"prod-OK":"prod-nOK";
+                        sTarget += shiftData.T;
+                        sActual += act;
+                    }
                     
                     tr += `<tr><td class="text-align-center">${dt}</td>
-                    <td class="text-align-right">${shiftData.T}</td>
-                    <td class="text-align-right ${cls}">${act}</td></tr>`;
+                        <td class="text-align-right">${shiftData.T}</td>
+                        <td class="text-align-right ${cls}">${act}</td></tr>`;
                 }
-                tr += `</tbody></table></td>`
+                tr += `<tr style="font-weight:bold"><td class="text-align-center">Total</td>
+                    <td class="text-align-right">${sTarget}</td>
+                    <td class="text-align-right ${(sActual>= sTarget?"prod-OK":"prod-nOK")}">${sActual}</td></tr>
+                    </tbody></table></td>`
             }
             $$('#shiftData').html(tr);
+
+            $$('#andonForLine').html(data["ANDON"] || "No Andon");
+            if(data["ANDON"] != "") $$('#andonForLine').removeClass('andon-OK').addClass('andon-Red');
+            else $$('#andonForLine').removeClass('andon-Red').addClass('andon-OK');
+
             $$('#lastUpHourProd').text(moment().format('d-MMM h:mm:ssa'));
             toastUpdComplete.open();
         },
