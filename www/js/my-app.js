@@ -1,11 +1,12 @@
 // Initialize app
+var isMobile = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
 var host = 'http://localhost:62029';
 //var host = 'http://tilhdev02/tmosdata';
+if(isMobile) host = 'http://tilhdev02/tmosdata';
 var lineList = {};
 var mcListActionSheet = null;
 var curTag = {};
 var curPage;
-var isMobile = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
 
 var app = new Framework7({
     theme : 'ios',
