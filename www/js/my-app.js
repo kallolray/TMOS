@@ -109,7 +109,7 @@ function refreshPage(){
 }
 
 function changeOrientation(orient){
-    app.alert(screen.orientation.type);
+    app.dialog.alert(screen.orientation.type);
     if(screen.orientation.type != orient){
         screen.orientation.unlock();
         screen.orientation.lock(orient);
