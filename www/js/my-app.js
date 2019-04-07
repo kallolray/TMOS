@@ -74,7 +74,7 @@ if(Locstor.contains("userData"))
     userData = Locstor.get("userData");
     $$("#userName").text("Hi " + userData.userName);
 }
-var view = app.views.create('.view-main',{url: (userData != null? "/andon/":"/login/")});
+var view = app.views.create('.view-main',{iosSwipeBack:false, url: (userData != null? "/andon/":"/login/")});
 
 var toastUpdComplete = app.toast.create({
     text: 'Data Updated',
@@ -100,7 +100,7 @@ function refreshPage(){
         case 'login':
             if(userData != null){
                 app.form.fillFromData('#login-form', userData);
-                $$('#miscData').text(`Last Updated On: ${userData.lastUpdated}, Phone: ${userData.platform} on ${userData.model}`);
+                $$('#miscData').html(`Last Updated On: ${userData.lastUpdated}<br>Platform: ${userData.platform} on ${userData.model}`);
             }else{
                 $$("#loginCancel").hide();
             }
