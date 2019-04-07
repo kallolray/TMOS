@@ -1,0 +1,85 @@
+    <div class="page no-navbar no-toolbar no-swipeback" data-name="settings">
+      <!-- page-content has additional login-screen content -->
+      <div class="page-content login-screen-content">
+        <div class="login-screen-title margin-zero">TMOS - Jamshedpur</div>
+        <!-- Login form -->
+        <form>
+          <div class="list margin-zero" id="settings-form">
+            <ul>
+              <li class="item-content item-input item-input-outline">
+                <div class="item-inner">
+                  <div class="item-title item-floating-label">Windows User ID</div>
+                  <div class="item-input-wrap">
+                    <input type="text" name="userID" placeholder="UserID">
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+              <li class="item-content item-input item-input-outline">
+                <div class="item-inner">
+                  <div class="item-title item-floating-label">Mobile Number</div>
+                  <div class="item-input-wrap">
+                    <input type="tel" name="mobile" placeholder="Mobile Number">
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+              <li class="item-content item-input item-input-outline">
+                <div class="item-inner">
+                  <div class="item-title item-floating-label">How do you want us to call you?</div>
+                  <div class="item-input-wrap">
+                    <input type="text" name="userName" placeholder="Name">
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+              <li class="item-content item-input item-input-outline">
+                <div class="item-inner">
+                  <div class="item-title item-floating-label">What do you want to see when App opens?</div>
+                  <div class="item-input-wrap input-dropdown-wrap">
+                      <select name="startWith" placeholder="Please choose...">
+                          <option value="/andon/">Active Andons</option>
+                          <option value="/hourprod/">Hour By Hour Production</option>
+                          <option value="/team/">Shift Team</option>
+                        </select>
+                  </div>
+                </div>
+              </li>
+
+              <li class="item-content item-input">
+                <span>Notify when Andon is pushed?</span>
+                <label class="toggle toggle-init color-blue" style="margin-right: 20px;">
+                    <input name="NotifyWhenPushed" type="checkbox" checked>
+                    <span class="toggle-icon"></span>
+                </label>
+              </li>
+              <li class="item-content item-input">
+                  <span>Notify Hourly misses?</span>
+                  <label class="toggle toggle-init color-blue" style="margin-right: 20px;">
+                      <input name="NotifyHourlyMiss" type="checkbox" checked>
+                      <span class="toggle-icon"></span>
+                  </label>
+                </li>
+  
+              <li>
+                  <table width="100%">
+                      <tr>
+                          <td style="text-align: right">
+                                <a href="#" class="item-link list-button login-screen-close" onclick="saveUserData();">Save User Data</a>
+                          </td>
+                          <td style="text-align: right">
+                                <a href="#" class="item-link list-button login-screen-close" 
+                                id="settingsCancel" onclick="view.router.navigate('/andon/');">Don't Change</a>
+                          </td>
+                      </tr>
+                  </table>
+              </li>
+              <li>
+                <div class="item-title item-label" style="margin-left:5px" id="miscData"></div>
+              </li>
+            </ul>
+          </div>
+          
+        </form>
+      </div>
+    </div>

@@ -36,9 +36,9 @@ var app = new Framework7({
             url: 'log.html',
         },
         {
-            name: 'login',
-            path: '/login/',
-            url: 'login.html',
+            name: 'settings',
+            path: '/settings/',
+            url: 'settings.html',
         },
       ],
     toast: {
@@ -57,7 +57,7 @@ var app = new Framework7({
         pageInit: function (e, page) {
           // do something when page initialized
             curPage = e.name;
-            if(curPage == 'login'){
+            if(curPage == 'settings'){
                  app.panel.disableSwipe('left');
                  changeOrientation('portrait');
             }
@@ -74,7 +74,7 @@ if(Locstor.contains("userData"))
     userData = Locstor.get("userData");
     $$("#userName").text("Hi " + userData.userName);
 }
-var view = app.views.create('.view-main',{iosSwipeBack:false, url: (userData != null? "/andon/":"/login/")});
+var view = app.views.create('.view-main',{iosSwipeBack:false, url: (userData != null? "/andon/":"/settings/")});
 
 var toastUpdComplete = app.toast.create({
     text: 'Data Updated',
@@ -97,12 +97,14 @@ function refreshPage(){
         case 'log':
             showLog();
             break;
-        case 'login':
+        case 'settings':
             if(userData != null){
-                app.form.fillFromData('#login-form', userData);
-                $$('#miscData').html(`Last Updated On: ${userData.lastUpdated}<br>Platform: ${userData.platform} on ${userData.model}`);
+                app.form.fillFromData('#settings-form', userData);
+                $$('#miscData').html(`Last Updated On: ${userData.lastUpdated}<br>\
+                    Platform: ${userData.platform || device.platform} on ${userData.model || device.model}<br>\
+                    Notification ID: ${userData.notificationID || pushApp.registrationId}`);
             }else{
-                $$("#loginCancel").hide();
+                $$("#settingsCancel").hide();
             }
             break;
     }
@@ -274,10 +276,11 @@ function getPCCount(tag){
     });
 }
 function saveUserData(){
-    userData = app.form.convertToData('#login-form');
+    userData = app.form.convertToData('#settings-form');
     userData.lastUpdated = moment().format("D-MMM-YY h:mm:ss a");
     userData.platform = device.platform;
     userData.model = device.model;
+    userData.notificationID = pushApp.registrationId;
     Locstor.set("userData", userData);
     $$("#userName").text("Hi " + userData.userName);
     view.router.navigate("/andon/");
