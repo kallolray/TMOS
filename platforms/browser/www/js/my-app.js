@@ -51,14 +51,20 @@ var app = new Framework7({
     on: {
         init: function(e, page) {
             document.addEventListener("resume", refreshPage, false);
-            screen.orientation.lock('landscape');
+            //screen.orientation.lock('landscape');
             //if(isMobile) pushApp.setupPush();
         },
         pageInit: function (e, page) {
           // do something when page initialized
             curPage = e.name;
-            if(curPage == 'login') app.panel.disableSwipe('left');
-            else app.panel.enableSwipe('left');
+            if(curPage == 'login'){
+                 app.panel.disableSwipe('left');
+                 changeOrientation('portrait');
+            }
+            else{
+                 app.panel.enableSwipe('left');
+                 changeOrientation('landscape');
+            }
             refreshPage();
         },
       },
@@ -94,11 +100,18 @@ function refreshPage(){
         case 'login':
             if(userData != null){
                 app.form.fillFromData('#login-form', userData);
-                //$$('#miscData').text(`Last Updated On: ${userData.lastUpdated}, Phone: ${userData.platform} on ${userData.model}`);
+                $$('#miscData').text(`Last Updated On: ${userData.lastUpdated}, Phone: ${userData.platform} on ${userData.model}`);
             }else{
                 $$("#loginCancel").hide();
             }
             break;
+    }
+}
+
+function changeOrientation(orient){
+    if(screen.orientation.type != orient){
+        screen.orientation.unlock();
+        screen.orientation.lock(orient);
     }
 }
 
@@ -263,14 +276,10 @@ function getPCCount(tag){
 }
 function saveUserData(){
     userData = app.form.convertToData('#login-form');
-    app.dialog.alert(Object.keys(userData));
     userData.lastUpdated = moment().format("D-MMM-YY h:mm:ss a");
-    app.dialog.alert(Object.keys(userData));
-    //userData.platform = device.platform;
-    //userData.model = device.model;
+    userData.platform = device.platform;
+    userData.model = device.model;
     Locstor.set("userData", userData);
-    app.dialog.alert("Saved to Local storage");
     $$("#userName").text("Hi " + userData.userName);
-    app.dialog.alert("user name set. moving to andon");
     view.router.navigate("/andon/");
 }

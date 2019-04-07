@@ -100,7 +100,7 @@ function refreshPage(){
         case 'login':
             if(userData != null){
                 app.form.fillFromData('#login-form', userData);
-                //$$('#miscData').text(`Last Updated On: ${userData.lastUpdated}, Phone: ${userData.platform} on ${userData.model}`);
+                $$('#miscData').text(`Last Updated On: ${userData.lastUpdated}, Phone: ${userData.platform} on ${userData.model}`);
             }else{
                 $$("#loginCancel").hide();
             }
@@ -109,6 +109,7 @@ function refreshPage(){
 }
 
 function changeOrientation(orient){
+    app.alert(screen.orientation.type);
     if(screen.orientation.type != orient){
         screen.orientation.unlock();
         screen.orientation.lock(orient);
@@ -277,10 +278,8 @@ function getPCCount(tag){
 function saveUserData(){
     userData = app.form.convertToData('#login-form');
     userData.lastUpdated = moment().format("D-MMM-YY h:mm:ss a");
-    app.dialog.alert(Object.keys(userData));
     userData.platform = device.platform;
     userData.model = device.model;
-    app.dialog.alert("got device data");
     Locstor.set("userData", userData);
     $$("#userName").text("Hi " + userData.userName);
     view.router.navigate("/andon/");
