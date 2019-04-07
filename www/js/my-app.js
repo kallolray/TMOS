@@ -263,7 +263,6 @@ function getPCCount(tag){
 }
 function saveUserData(){
     userData = app.form.convertToData('#login-form');
-    app.dialog.alert(Object.keys(userData));
     userData.lastUpdated = moment().format("D-MMM-YY h:mm:ss a");
     app.dialog.alert(Object.keys(userData));
     //userData.platform = device.platform;
