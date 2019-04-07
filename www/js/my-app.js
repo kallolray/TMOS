@@ -51,14 +51,20 @@ var app = new Framework7({
     on: {
         init: function(e, page) {
             document.addEventListener("resume", refreshPage, false);
-            screen.orientation.lock('landscape');
+            //screen.orientation.lock('landscape');
             //if(isMobile) pushApp.setupPush();
         },
         pageInit: function (e, page) {
           // do something when page initialized
             curPage = e.name;
-            if(curPage == 'login') app.panel.disableSwipe('left');
-            else app.panel.enableSwipe('left');
+            if(curPage == 'login'){
+                 app.panel.disableSwipe('left');
+                 changeOrientation('portrait');
+            }
+            else{
+                 app.panel.enableSwipe('left');
+                 changeOrientation('landscape');
+            }
             refreshPage();
         },
       },
@@ -99,6 +105,13 @@ function refreshPage(){
                 $$("#loginCancel").hide();
             }
             break;
+    }
+}
+
+function changeOrientation(orient){
+    if(screen.orientation != orient){
+        screen.orientation.unlock();
+        screen.orientation.lock(orient);
     }
 }
 
