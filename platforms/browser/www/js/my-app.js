@@ -94,7 +94,7 @@ function refreshPage(){
         case 'login':
             if(userData != null){
                 app.form.fillFromData('#login-form', userData);
-                $$('#miscData').text(`Last Updated On: ${userData.lastUpdated}, Phone: ${userData.platform} on ${userData.model}`);
+                //$$('#miscData').text(`Last Updated On: ${userData.lastUpdated}, Phone: ${userData.platform} on ${userData.model}`);
             }else{
                 $$("#loginCancel").hide();
             }
@@ -264,8 +264,8 @@ function getPCCount(tag){
 function saveUserData(){
     userData = app.form.convertToData('#login-form');
     userData.lastUpdated = moment().format("D-MMM-YY h:mm:ss a");
-    userData.platform = device.platform;
-    userData.model = device.model;
+    //userData.platform = device.platform;
+    //userData.model = device.model;
     Locstor.set("userData", userData);
     $$("#userName").text("Hi " + userData.userName);
     view.router.navigate("/andon/");
