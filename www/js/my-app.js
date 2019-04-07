@@ -190,7 +190,6 @@ function getMC4PCCount(){
         method:'GET',
         success: function(data){
             for(let i=0; i < data.length; ++i){
-                for(let j=0; j < 2; ++j){
                 mcListButtons.push(
                     {
                         text:data[i].MCNAME,
@@ -198,7 +197,6 @@ function getMC4PCCount(){
                             getPCCount({ID:data[i].TAGID, Name:data[i].MCNAME});
                         },
                     });
-                }
             }
             mcListActionSheet = app.actions.create({buttons:mcListButtons});
             app.preloader.hide();
