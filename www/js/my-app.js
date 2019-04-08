@@ -3,8 +3,8 @@
 var $$ = Dom7;
 
 var isMobile = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
-var host = 'http://localhost:62029';
-//var host = 'http://tilhdev02/tmosdata';
+//var host = 'http://localhost:62029';
+var host = 'http://tilhdev02/tmosdata';
 if(isMobile) host = 'http://tilhdev02/tmosdata';
 var lineList = {};
 var mcListActionSheet = null;
@@ -43,7 +43,7 @@ var app = new Framework7({
         },
       ],
     toast: {
-        closeTimeout: 500,
+        closeTimeout: 1000,
     },
     statusbar: {
         iosOverlaysWebView: false,
@@ -80,14 +80,11 @@ if(Locstor.contains("userData"))
 var view = app.views.create('.view-main',{iosSwipeBack:false, 
     url: (Locstor.contains("userData")? userData.startWith || "/andon/" : "/settings/")});
 
+testNTLM();
+
 var toastUpdComplete = app.toast.create({
     text: 'Data Updated',
 });
-
-function showToast(text){
-    toastUpdComplete.params.text = text;
-    toastUpdComplete.open();
-}
 
 document.addEventListener("deviceready", 
     () => 
@@ -137,6 +134,20 @@ function showLog(){
     $$("#lastUpdLog").text(moment().format('D-MMM h:mm:ssa'));
 }
 
+function testNTLM(){
+    Ntlm.setCredentials('corp', 'rayk', 'Timke@05'); //'domain', 'username', 'password'
+    var url = host + '/api/plc/AndonLines';
+    
+    if (Ntlm.authenticate(url)) {
+        var request = new XMLHttpRequest();
+        request.open('GET', url, false);
+        request.send(null);
+        app.dialog.toast(request.responseText);
+        consoleLog.push(request.responseText);
+        // => My super secret message stored on server.
+    }    
+}
+
 function getlineList(){
     app.preloader.show('gray');
     app.request({
@@ -155,7 +166,7 @@ function getlineList(){
         },
         error: function(error,status){
             app.preloader.hide();
-            app.dialog.alert("Error - " + status);
+            showDBError(error);
         }
     });
 }
@@ -185,8 +196,8 @@ function updateAndon(){
             $$('#lastUpdAndon').text(moment().format('D-MMM h:mm:ssa'));
             //toastUpdComplete.open();
         },
-        error: function(error,status){
-            app.dialog.alert("Error - " + status);
+        error: function(error){
+            showDBError(error);
         },
         complete: function(){
             app.preloader.hide();
@@ -203,6 +214,9 @@ function getMC4PCCount(){
         crossDomain:true,
         cache:false,
         method:'GET',
+        xhrFields: {
+            withCredentials: true
+        },
         success: function(data){
             for(let i=0; i < data.length; ++i){
                 mcListButtons.push(
@@ -218,7 +232,7 @@ function getMC4PCCount(){
             mcListActionSheet.open();
         },
         error: function(error,status){
-            app.dialog.alert("Error - " + status);
+            showDBError(error);
         },
         complete: function(){
             app.preloader.hide();
@@ -281,7 +295,7 @@ function getPCCount(tag){
             //toastUpdComplete.open();
         },
         error: function(error,status){
-            app.dialog.alert("Error - " + status);
+            showDBError(error);
         },
         complete: function(){
             app.preloader.hide();
@@ -318,13 +332,17 @@ function saveUserData2Server(){
             platform: device.platform, model: device.model
         },
         success : (data) =>{
-            showToast(data);
+            app.toast.show(data);
         },
         error: (error) =>{
-            app.dialog.alert("Error saving Data - " + error.responseText);
+            showDBError(error);
         },
         complete: function(){
             app.preloader.hide();
         }
     });
+}
+
+function showDBError(error){
+    app.dialog.alert(error.statusText || error.responseText);
 }
