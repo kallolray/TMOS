@@ -1,11 +1,12 @@
 var pushApp = {
-    statusData : "",
+    statusData : [],
     registrationId: "",
     addStatus: function(text){
-        this.statusData += (text + "<br>");
+        this.statusData.push(text);
     },
 
-    setupPush: function() {
+    setupPush: function(consoleLog) {
+        this.statusData = consoleLog;
         pushApp.addStatus("calling push init"); 
         var push = PushNotification.init({
             "android": {
@@ -22,10 +23,11 @@ var pushApp = {
         pushApp.addStatus("After Init"); 
 
         push.on('registration', function(data) {
-            pushApp.addStatus('registration event: ' + data.registrationId);
+            pushApp.addStatus('registration done');
             pushApp.registrationId = data.registrationId;
             var oldRegId = localStorage.getItem('registrationId');
             if (oldRegId !== data.registrationId) {
+                pushApp.addStatus('registration id changed');
                 // Save new registration ID
                 localStorage.setItem('registrationId', data.registrationId);
                 // Post registrationId to your pushApp server as the value has changed

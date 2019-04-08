@@ -1,0 +1,54 @@
+{
+  "_from": "cordova-plugin-ping",
+  "_id": "cordova-plugin-ping@0.4.0",
+  "_inBundle": false,
+  "_integrity": "sha1-sL1CfaUWzjUPrvEZnrCNleTWaT8=",
+  "_location": "/cordova-plugin-ping",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "cordova-plugin-ping",
+    "name": "cordova-plugin-ping",
+    "escapedName": "cordova-plugin-ping",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-ping/-/cordova-plugin-ping-0.4.0.tgz",
+  "_shasum": "b0bd427da516ce350faef1199eb08d95e4d6693f",
+  "_spec": "cordova-plugin-ping",
+  "_where": "C:\\Users\\rayk\\Documents\\OPC\\PhoneGap\\TMOS",
+  "author": {
+    "name": "t1st3"
+  },
+  "bugs": {
+    "url": "https://github.com/t1st3/cordova-plugin-ping/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-ping",
+    "platforms": [
+      "android"
+    ]
+  },
+  "deprecated": false,
+  "description": "Cordova Ping Plugin",
+  "homepage": "https://github.com/t1st3/cordova-plugin-ping#readme",
+  "keywords": [
+    "cordova",
+    "ping",
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "license": "MIT",
+  "name": "cordova-plugin-ping",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/t1st3/cordova-plugin-ping.git"
+  },
+  "version": "0.4.0"
+}

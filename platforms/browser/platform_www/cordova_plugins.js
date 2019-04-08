@@ -445,6 +445,22 @@ module.exports = [
         "clobbers": [
             "PushNotification"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-ping/www/ping.js",
+        "id": "cordova-plugin-ping.ping",
+        "pluginId": "cordova-plugin-ping",
+        "clobbers": [
+            "Ping"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-sim/www/sim.js",
+        "id": "cordova-plugin-sim.Sim",
+        "pluginId": "cordova-plugin-sim",
+        "merges": [
+            "window.plugins.sim"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -463,7 +479,9 @@ module.exports.metadata =
     "cordova-plugin-globalization": "1.0.9",
     "cordova-plugin-inappbrowser": "1.3.0",
     "cordova-plugin-screen-orientation": "3.0.1",
-    "phonegap-plugin-push": "2.2.3"
+    "phonegap-plugin-push": "2.2.3",
+    "cordova-plugin-ping": "0.3.1",
+    "cordova-plugin-sim": "1.3.3"
 }
 // BOTTOM OF METADATA
 });

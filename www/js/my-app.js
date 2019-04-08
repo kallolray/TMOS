@@ -11,6 +11,7 @@ var mcListActionSheet = null;
 var curTag = {};
 var curPage;
 var userData = null;
+var consoleLog = [];
 
 var app = new Framework7({
     theme : 'ios',
@@ -69,12 +70,15 @@ var app = new Framework7({
         },
       },
 });
+
 if(Locstor.contains("userData"))
 {
     userData = Locstor.get("userData");
     $$("#userName").text("Hi " + userData.userName);
 }
-var view = app.views.create('.view-main',{iosSwipeBack:false, url: (userData != null? "/andon/":"/settings/")});
+
+var view = app.views.create('.view-main',{iosSwipeBack:false, 
+    url: (Locstor.contains("userData")? userData.startWith || "/andon/" : "/settings/")});
 
 var toastUpdComplete = app.toast.create({
     text: 'Data Updated',
@@ -82,7 +86,14 @@ var toastUpdComplete = app.toast.create({
 });
 
 document.addEventListener("deviceready", 
-    () => {if(isMobile) pushApp.setupPush();}, false);
+    () => 
+    {
+        pingServer("tilhdev02");
+        if(isMobile){
+            pushApp.setupPush(consoleLog);
+            getSIMData();
+        }
+    }, false);
     
 function refreshPage(){
     switch (curPage){
@@ -118,9 +129,36 @@ function changeOrientation(orient){
     }
 }
 
+function pingServer(serverName){
+    var pingOK = false;
+    var p = new Ping();
+    p.ping(
+        [{query: serverName, timeout: 1,retry: 3,version:'v4'}], 
+        (results)=> {
+            consoleLog.push(JSON.stringify(results));
+            pingOK = true;
+        }, 
+        (err) => {
+            consoleLog.push(err);
+            pingOK = false;
+        }
+    );
+}
+
+function getSIMData(){
+    window.plugins.sim.getSimInfo(
+        (result) => {
+            consoleLog.push(JSON.stringify(result));
+        }, 
+        (error) => {
+            consoleLog.push(error);
+        }
+    );
+}
+
 function showLog(){
-    $$("#logData").html(pushApp.statusData);
     $$("#regID").val(pushApp.registrationId);
+    $$("#logData").html(consoleLog.join("<br>"));
     $$("#lastUpdLog").text(moment().format('D-MMM h:mm:ssa'));
 }
 
@@ -283,5 +321,5 @@ function saveUserData(){
     userData.notificationID = pushApp.registrationId;
     Locstor.set("userData", userData);
     $$("#userName").text("Hi " + userData.userName);
-    view.router.navigate("/andon/");
+    view.router.navigate(userData.startWith || "/andon/");
 }

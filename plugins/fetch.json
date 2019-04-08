@@ -176,5 +176,21 @@
     "variables": {
       "SENDER_ID": "NONE"
     }
+  },
+  "cordova-plugin-ping": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-ping"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-sim": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-sim"
+    },
+    "is_top_level": true,
+    "variables": {}
   }
 }

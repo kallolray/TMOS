@@ -45,6 +45,12 @@
     },
     "phonegap-plugin-push": {
       "PACKAGE_NAME": "com.timken.rayk.tmosjsr"
+    },
+    "cordova-plugin-ping": {
+      "PACKAGE_NAME": "com.timken.rayk.tmosjsr"
+    },
+    "cordova-plugin-sim": {
+      "PACKAGE_NAME": "com.timken.rayk.tmosjsr"
     }
   },
   "dependent_plugins": {
