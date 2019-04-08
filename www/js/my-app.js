@@ -82,8 +82,12 @@ var view = app.views.create('.view-main',{iosSwipeBack:false,
 
 var toastUpdComplete = app.toast.create({
     text: 'Data Updated',
-    closeTimeout: 2000,
 });
+
+function showToast(text){
+    toastUpdComplete.params.text = text;
+    toastUpdComplete.open();
+}
 
 document.addEventListener("deviceready", 
     () => 
@@ -110,7 +114,7 @@ function refreshPage(){
             if(userData != null){
                 app.form.fillFromData('#settings-form', userData);
                 $$('#miscData').html(`Last Updated On: ${userData.lastUpdated}<br>\
-                    Platform: ${userData.platform || device.platform} on ${userData.model || device.model}<br>\
+                    Platform: ${device.platform} on ${device.model}<br>\
                     Notification ID: ${userData.notificationID || pushApp.registrationId}`);
             }else{
                 $$("#settingsCancel").hide();
@@ -285,12 +289,42 @@ function getPCCount(tag){
     });
 }
 function saveUserData(){
+    var oldMobile = userData == null?"":userData.mobile || "";
     userData = app.form.convertToData('#settings-form');
     userData.lastUpdated = moment().format("D-MMM-YY h:mm:ss a");
-    userData.platform = device.platform;
-    userData.model = device.model;
-    userData.notificationID = pushApp.registrationId;
+    userData.notificationID = pushApp.registrationId || '0';
+    userData.oldMobile = oldMobile;
     Locstor.set("userData", userData);
     $$("#userName").text("Hi " + userData.userName);
+    saveUserData2Server();
     view.router.navigate(userData.startWith || "/andon/");
+}
+
+function saveUserData2Server(){
+    if(userData == null || userData.userID == null || userData.mobile == null || 
+            userData.userName == null || userData.notificationID == null){
+        showToast("Not Saved as all Data not provided");
+        return;
+    }
+    app.preloader.show('gray');
+    app.request({
+        url: host + '/api/plc/UpdMobile',
+        dataType:'json',
+        crossDomain:true,
+        cache:false,
+        method:'POST',
+        data: {mobileNum: userData.mobile, oldMobileNum: userData.oldMobile, userID:userData.userID, 
+            userName:userData.userName, regID:userData.notificationID, 
+            platform: device.platform, model: device.model
+        },
+        success : (data) =>{
+            showToast(data);
+        },
+        error: (error) =>{
+            app.dialog.alert("Error saving Data - " + error.responseText);
+        },
+        complete: function(){
+            app.preloader.hide();
+        }
+    });
 }

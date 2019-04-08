@@ -7,7 +7,7 @@ var pushApp = {
 
     setupPush: function(consoleLog) {
         this.statusData = consoleLog;
-        pushApp.addStatus("calling push init"); 
+        pushApp.addStatus("Calling push init"); 
         var push = PushNotification.init({
             "android": {
                 "senderID": "XXXXXXXX"
@@ -20,7 +20,7 @@ var pushApp = {
             },
             "windows": {}
         });
-        pushApp.addStatus("After Init"); 
+        pushApp.addStatus("After Push Init"); 
 
         push.on('registration', function(data) {
             pushApp.addStatus('registration done');
@@ -35,11 +35,11 @@ var pushApp = {
         });
 
         push.on('error', function(e) {
-            pushApp.addStatus("push error = " + e.message); 
+            pushApp.addStatus("Push error = " + e.message); 
         });
 
         push.on('notification', function(data) {
-            pushApp.addStatus("notification event"); 
+            pushApp.addStatus("Notification received"); 
             navigator.notification.alert(
                 data.message,         // message
                 null,                 // callback
