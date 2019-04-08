@@ -58,7 +58,7 @@ var app = new Framework7({
         pageInit: function (e, page) {
           // do something when page initialized
             curPage = e.name;
-            if(curPage == 'settings' || curPage == 'log'){
+            if(curPage == 'settings'){
                  app.panel.disableSwipe('left');
                  changeOrientation('portrait');
             }
@@ -88,10 +88,8 @@ var toastUpdComplete = app.toast.create({
 document.addEventListener("deviceready", 
     () => 
     {
-        pingServer("tilhdev02");
         if(isMobile){
             pushApp.setupPush(consoleLog);
-            getSIMData();
         }
     }, false);
     
@@ -127,35 +125,6 @@ function changeOrientation(orient){
         screen.orientation.unlock();
         screen.orientation.lock(orient);
     }
-}
-
-function pingServer(serverName){
-    var pingOK = false;
-    var p = new Ping();
-    consoleLog.push("Pinging " + serverName);
-    p.ping(
-        [{query: serverName, timeout: 1,retry: 3,version:'v4'}], 
-        (result)=> {
-            consoleLog.push(JSON.stringify(result));
-            pingOK = true;
-        }, 
-        (error) => {
-            consoleLog.push("Ping Error : " + error);
-            pingOK = false;
-        }
-    );
-}
-
-function getSIMData(){
-    consoleLog.push("Checking SIM");
-    window.plugins.sim.getSimInfo(
-        (result) => {
-            consoleLog.push(JSON.stringify(result));
-        }, 
-        (error) => {
-            consoleLog.push("SIM Error : " + error);
-        }
-    );
 }
 
 function showLog(){

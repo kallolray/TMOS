@@ -29,8 +29,6 @@
     <plugin name="phonegap-plugin-push" source="npm" spec="~2.2.0">
         <variable name="SENDER_ID" value="NONE" />
     </plugin>
-    <plugin name="cordova-plugin-ping" source="npm" spec="~0.4.0"/>
-    <plugin name="cordova-plugin-sim2" source="npm" spec="~1.0.16"/>
     
     <platform name="ios">
         <icon height="57" platform="ios" src="www/res/icon/ios/icon.png" width="57" />
