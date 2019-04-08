@@ -58,7 +58,7 @@ var app = new Framework7({
         pageInit: function (e, page) {
           // do something when page initialized
             curPage = e.name;
-            if(curPage == 'settings'){
+            if(curPage == 'settings' || curPage == 'log'){
                  app.panel.disableSwipe('left');
                  changeOrientation('portrait');
             }
@@ -132,26 +132,28 @@ function changeOrientation(orient){
 function pingServer(serverName){
     var pingOK = false;
     var p = new Ping();
+    consoleLog.push("Pinging " + serverName);
     p.ping(
         [{query: serverName, timeout: 1,retry: 3,version:'v4'}], 
-        (results)=> {
-            consoleLog.push(JSON.stringify(results));
+        (result)=> {
+            consoleLog.push(JSON.stringify(result));
             pingOK = true;
         }, 
-        (err) => {
-            consoleLog.push(err);
+        (error) => {
+            consoleLog.push("Ping Error : " + error);
             pingOK = false;
         }
     );
 }
 
 function getSIMData(){
+    consoleLog.push("Checking SIM");
     window.plugins.sim.getSimInfo(
         (result) => {
             consoleLog.push(JSON.stringify(result));
         }, 
         (error) => {
-            consoleLog.push(error);
+            consoleLog.push("SIM Error : " + error);
         }
     );
 }
