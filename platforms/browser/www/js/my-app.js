@@ -80,7 +80,7 @@ if(Locstor.contains("userData"))
 var view = app.views.create('.view-main',{iosSwipeBack:false, 
     url: (Locstor.contains("userData")? userData.startWith || "/andon/" : "/settings/")});
 
-testNTLM();
+
 
 var toastUpdComplete = app.toast.create({
     text: 'Data Updated',
@@ -89,6 +89,7 @@ var toastUpdComplete = app.toast.create({
 document.addEventListener("deviceready", 
     () => 
     {
+        testNTLM();
         if(isMobile){
             pushApp.setupPush(consoleLog);
         }
@@ -139,10 +140,12 @@ function testNTLM(){
     var url = host + '/api/plc/AndonLines';
     
     if (Ntlm.authenticate(url)) {
+        app.dialog.alert("NTLM Success");
         var request = new XMLHttpRequest();
         request.open('GET', url, false);
         request.send(null);
-        app.dialog.toast(request.responseText);
+        app.dialog.alert(request.responseText);
+        consoleLog.push(request.responseText);
         // => My super secret message stored on server.
     }    
 }
