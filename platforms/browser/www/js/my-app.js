@@ -89,7 +89,6 @@ var toastUpdComplete = app.toast.create({
 document.addEventListener("deviceready", 
     () => 
     {
-        testNTLM();
         if(isMobile){
             pushApp.setupPush(consoleLog);
         }
@@ -133,21 +132,6 @@ function showLog(){
     $$("#regID").val(pushApp.registrationId);
     $$("#logData").html(consoleLog.join("<br>"));
     $$("#lastUpdLog").text(moment().format('D-MMM h:mm:ssa'));
-}
-
-function testNTLM(){
-    Ntlm.setCredentials('corp', 'rayk', 'Timke@05'); //'domain', 'username', 'password'
-    var url = host + '/api/plc/AndonLines';
-    
-    if (Ntlm.authenticate(url)) {
-        app.dialog.alert("NTLM Success");
-        var request = new XMLHttpRequest();
-        request.open('GET', url, false);
-        request.send(null);
-        app.dialog.alert(request.responseText);
-        consoleLog.push(request.responseText);
-        // => My super secret message stored on server.
-    }    
 }
 
 function getlineList(){
@@ -216,9 +200,6 @@ function getMC4PCCount(){
         crossDomain:true,
         cache:false,
         method:'GET',
-        xhrFields: {
-            withCredentials: true
-        },
         success: function(data){
             for(let i=0; i < data.length; ++i){
                 mcListButtons.push(
@@ -331,6 +312,7 @@ function saveUserData2Server(){
         method:'POST',
         data: {mobileNum: userData.mobile, oldMobileNum: userData.oldMobile, userID:userData.userID, 
             userName:userData.userName, regID:userData.notificationID, 
+            NotifyWhenPushed:userData.NotifyWhenPushed, NotifyHourlyMiss:userData.NotifyHourlyMiss,
             platform: device.platform, model: device.model
         },
         success : (data) =>{

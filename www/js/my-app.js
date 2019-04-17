@@ -312,7 +312,7 @@ function saveUserData2Server(){
         method:'POST',
         data: {mobileNum: userData.mobile, oldMobileNum: userData.oldMobile, userID:userData.userID, 
             userName:userData.userName, regID:userData.notificationID, 
-            NotifyWhenPushed:userData.NotifyWhenPushed, NotifyHourlyMiss:userData.NotifyHourlyMiss,
+            NotifyWhenPushed:userData.NotifyWhenPushed.length, NotifyHourlyMiss:userData.NotifyHourlyMiss.length,
             platform: device.platform, model: device.model
         },
         success : (data) =>{
