@@ -39,7 +39,7 @@ var pushApp = {
         });
 
         push.on('notification', function(data) {
-            pushApp.addStatus("Notification received"); 
+            pushApp.addStatus("Notification received - " + data.message); 
             navigator.notification.alert(
                 data.message,         // message
                 null,                 // callback
